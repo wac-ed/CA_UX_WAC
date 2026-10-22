@@ -1,0 +1,1083 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Context-Aware UX Framework (CAUX)</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fraunces:ital,wght@0,300..700;1,300..700&display=swap">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400..700&display=swap">
+<style>
+  :root { --page: #E4E0D7; --ink: #16213A; }
+  * { box-sizing: border-box; margin: 0; }
+  body { background: var(--page); font-family: 'DM Sans', Arial, sans-serif; padding: 32px 16px 64px; }
+  .frame { position: relative; width: min(1280px, 100%); aspect-ratio: 16 / 9; margin: 0 auto 32px;
+           overflow: hidden; border-radius: 12px; box-shadow: 0 8px 32px rgba(22,33,58,.18); container-type: inline-size; }
+  .stage { width: 1920px; height: 1080px; transform-origin: 0 0; transform: scale(calc(100cqw / 1920px)); }
+  @supports not (width: 1cqw) { .stage { transform: scale(.6667); } }
+  section { position: relative; width: 1920px; height: 1080px; box-sizing: border-box; overflow: hidden; }
+  section aside { display: none; }
+  section ul, section ol { padding-left: 1.2em; }
+  section a { color: inherit; }
+  table { border-collapse: collapse; width: 100%; }
+  th, td { text-align: left; padding: .35em .6em; border-bottom: 1px solid #D6CFC1; }
+  th { border-bottom: 2px solid #16213A; }
+  x-icon { display: inline-block; border-radius: 50%; background: currentColor; opacity: .3; }
+  x-shape { display: inline-block; }
+  x-shape[kind="arrow-right"] { clip-path: polygon(0 30%, 60% 30%, 60% 0, 100% 50%, 60% 100%, 60% 70%, 0 70%); }
+  .num { position: absolute; right: 12px; bottom: 8px; font-size: 12px; color: #5E6371; text-decoration: none; }
+</style>
+</head>
+<body>
+<div class="frame" id="s1"><div class="stage"><section id="cover" data-transition="fade" style="background:#16213A;color:#F6F4EF;font-family:'DM Sans', Arial, sans-serif;padding:128px 128px 280px;display:flex;flex-direction:column;justify-content:center;gap:40px">
+<div style="position:absolute;left:0;top:0;width:24px;height:1080px;background:#E07A4F"></div>
+<p style="font-size:24px;font-weight:700;letter-spacing:4px;text-transform:uppercase;color:#F0A07C">Research paper · E-commerce UX</p>
+<h1 style="font-family:'Fraunces', Georgia, serif;font-size:120px;font-weight:400;line-height:1.05;color:#F6F4EF">Designing for intent,<br><i>not pages</i></h1>
+<p style="font-size:44px;line-height:1.3;color:#BFC8D9">The Context-Aware UX Framework (CAUX)</p>
+<div style="position:absolute;left:128px;right:128px;bottom:128px;display:flex;flex-direction:row;justify-content:space-between;border-top:2px solid #3A4766;padding:24px 0 0 0">
+<p style="font-size:24px;color:#BFC8D9">Awareness</p>
+<p style="font-size:24px;color:#BFC8D9">Exploration</p>
+<p style="font-size:24px;color:#BFC8D9">Evaluation</p>
+<p style="font-size:24px;color:#BFC8D9">Decision</p>
+<p style="font-size:24px;color:#BFC8D9">Purchase</p>
+<p style="font-size:24px;color:#BFC8D9">Post-purchase</p>
+<p style="font-size:24px;color:#F0A07C">Loyalty</p>
+</div>
+<aside>This paper proposes the Context-Aware UX Framework (CAUX): an intent-driven approach to e-commerce design. The core idea: successful e-commerce comes from delivering the right experience at the right stage of the customer’s journey, not from adding more features. The seven journey stages along the bottom recur throughout the deck.</aside>
+</section>
+</div><a class="num" href="#s1">1 / 36</a></div>
+<div class="frame" id="s2"><div class="stage"><section id="problem" data-transition="fade" style="background:#F6F4EF;color:#16213A;font-family:'DM Sans', Arial, sans-serif;padding:128px;display:flex;flex-direction:column;gap:56px">
+<div style="display:flex;flex-direction:column;gap:20px">
+<p style="font-size:24px;font-weight:700;letter-spacing:3px;text-transform:uppercase;color:#B8461F">01 · The challenge</p>
+<h2 style="font-family:'Fraunces', Georgia, serif;font-size:72px;font-weight:400;line-height:1.1;color:#16213A">Feature-rich interfaces show too much, too soon</h2>
+</div>
+<div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:32px">
+<div style="display:flex;flex-direction:column;gap:16px;background:#FDFCF9;border:1px solid #E2DDD2;border-radius:20px;padding:40px">
+<x-icon name="Lightbulb" style="color:#B8461F;width:48px;height:48px"></x-icon>
+<h3 style="font-size:32px;font-weight:700;line-height:1.2">Cognitive load</h3>
+<p style="font-size:28px;line-height:1.45;color:#4A5263">Banners, competing CTAs and menus all draw on the same limited attention.</p>
+</div>
+<div style="display:flex;flex-direction:column;gap:16px;background:#FDFCF9;border:1px solid #E2DDD2;border-radius:20px;padding:40px">
+<x-icon name="Clock" style="color:#B8461F;width:48px;height:48px"></x-icon>
+<h3 style="font-size:32px;font-weight:700;line-height:1.2">Decision fatigue</h3>
+<p style="font-size:28px;line-height:1.45;color:#4A5263">Every unnecessary choice drains the energy users need to commit.</p>
+</div>
+<div style="display:flex;flex-direction:column;gap:16px;background:#FDFCF9;border:1px solid #E2DDD2;border-radius:20px;padding:40px">
+<x-icon name="Warning" style="color:#B8461F;width:48px;height:48px"></x-icon>
+<h3 style="font-size:32px;font-weight:700;line-height:1.2">Friction</h3>
+<p style="font-size:28px;line-height:1.45;color:#4A5263">Distractions interrupt decisions and push shoppers toward abandonment.</p>
+</div>
+</div>
+<p style="font-family:'Fraunces', Georgia, serif;font-size:44px;line-height:1.3;color:#16213A;border-left:6px solid #B8461F;padding:0 0 0 32px">The problem is rarely missing functionality. It is presenting functionality at the right time.</p>
+<aside>E-commerce has evolved into experience-driven ecosystems where UX decides acquisition, conversion and retention. Despite investment in personalization, AI and commerce tech, many platforms still fail at the basics: helping users complete goals with clarity, confidence and minimal effort. Interfaces overloaded with promotional banners, competing calls-to-action, excessive navigation and features that demand attention regardless of relevance raise cognitive load, create decision fatigue, and reduce conversion.</aside>
+</section>
+</div><a class="num" href="#s2">2 / 36</a></div>
+<div class="frame" id="s3"><div class="stage"><section id="gap" data-transition="fade" style="background:#F6F4EF;color:#16213A;font-family:'DM Sans', Arial, sans-serif;padding:128px;display:flex;flex-direction:column;gap:56px">
+<div style="display:flex;flex-direction:column;gap:20px">
+<p style="font-size:24px;font-weight:700;letter-spacing:3px;text-transform:uppercase;color:#B8461F">02 · The research gap</p>
+<h2 style="font-family:'Fraunces', Georgia, serif;font-size:72px;font-weight:400;line-height:1.1;color:#16213A">Known principles, applied in isolation</h2>
+</div>
+<div style="display:grid;grid-template-columns:1fr 1fr;gap:64px;align-items:stretch">
+<div style="display:flex;flex-direction:column;gap:20px">
+<p style="font-size:28px;line-height:1.4;color:#4A5263">Well established in HCI, cognitive psychology and usability engineering:</p>
+<p style="font-size:32px;font-weight:600;background:#ECE8DF;border-radius:14px;padding:22px 28px">Cognitive load reduction</p>
+<p style="font-size:32px;font-weight:600;background:#ECE8DF;border-radius:14px;padding:22px 28px">Progressive disclosure</p>
+<p style="font-size:32px;font-weight:600;background:#ECE8DF;border-radius:14px;padding:22px 28px">Visual hierarchy</p>
+<p style="font-size:32px;font-weight:600;background:#ECE8DF;border-radius:14px;padding:22px 28px">Trust building</p>
+</div>
+<div style="display:flex;flex-direction:column;gap:28px;background:#16213A;border-radius:24px;padding:48px;color:#F6F4EF">
+<p style="font-size:24px;font-weight:700;letter-spacing:3px;text-transform:uppercase;color:#F0A07C">Missing: one unified framework for</p>
+<div style="display:flex;flex-direction:column;gap:6px">
+<h3 style="font-family:'Fraunces', Georgia, serif;font-size:44px;font-weight:400;color:#F6F4EF">What</h3>
+<p style="font-size:28px;color:#BFC8D9">information should be presented</p>
+</div>
+<div style="display:flex;flex-direction:column;gap:6px">
+<h3 style="font-family:'Fraunces', Georgia, serif;font-size:44px;font-weight:400;color:#F6F4EF">When</h3>
+<p style="font-size:28px;color:#BFC8D9">it should be presented</p>
+</div>
+<div style="display:flex;flex-direction:column;gap:6px">
+<h3 style="font-family:'Fraunces', Georgia, serif;font-size:44px;font-weight:400;color:#F6F4EF">How</h3>
+<p style="font-size:28px;color:#BFC8D9">priorities should evolve as user intent changes</p>
+</div>
+</div>
+</div>
+<aside>Existing research gives us well-established principles, but they are usually applied one at a time. Few studies explain what to present, when, and how interface priorities should shift as intent changes. Most design systems define consistency through reusable components, but few ask whether those components should stay equally visible at every stage. CAUX is proposed to fill that gap.</aside>
+</section>
+</div><a class="num" href="#s3">3 / 36</a></div>
+<div class="frame" id="s4"><div class="stage"><section id="question" data-transition="fade" style="background:#B8461F;color:#FBF4EE;font-family:'DM Sans', Arial, sans-serif;padding:128px;display:flex;flex-direction:column;justify-content:center;gap:48px">
+<p style="font-size:24px;font-weight:700;letter-spacing:3px;text-transform:uppercase;color:#FBE3D6">The question that changes everything</p>
+<p style="font-size:44px;line-height:1.3;color:#FBE3D6;text-decoration:line-through">“What features should this page contain?”</p>
+<h2 style="font-family:'Fraunces', Georgia, serif;font-size:72px;font-weight:400;line-height:1.15;color:#FBF4EE">“What does the user need <i>at this moment</i> to confidently move to the next step?”</h2>
+<aside>This is the shift at the heart of the paper. Effective e-commerce UX should be designed around user intent, not interface pages. A homepage visitor seeks orientation and discovery; a customer in checkout wants to finish with as little friction as possible. Treating both moments with the same priorities adds distraction and raises abandonment. The goal is not to reduce functionality but to make every element serve a clear purpose in the user’s current context.</aside>
+</section>
+</div><a class="num" href="#s4">4 / 36</a></div>
+<div class="frame" id="s5"><div class="stage"><section id="evolution" data-transition="fade" style="background:#F6F4EF;color:#16213A;font-family:'DM Sans', Arial, sans-serif;padding:128px;display:flex;flex-direction:column;gap:56px">
+<div style="display:flex;flex-direction:column;gap:20px">
+<p style="font-size:24px;font-weight:700;letter-spacing:3px;text-transform:uppercase;color:#B8461F">03 · The evolution of e-commerce UX</p>
+<h2 style="font-family:'Fraunces', Georgia, serif;font-size:72px;font-weight:400;line-height:1.1;color:#16213A">From catalogs to clarity</h2>
+</div>
+<div style="display:grid;grid-template-columns:1fr 1fr 1fr 1fr;gap:32px">
+<div style="display:flex;flex-direction:column;gap:14px;border-top:6px solid #C9C2B4;padding:28px 0 0 0">
+<p style="font-size:24px;font-weight:700;color:#7A7F8C">STAGE 1</p>
+<h3 style="font-size:32px;font-weight:700;line-height:1.2">Transaction-centric</h3>
+<p style="font-size:28px;line-height:1.45;color:#4A5263">Digital catalogs. If users could find it and order it, the site worked.</p>
+</div>
+<div style="display:flex;flex-direction:column;gap:14px;border-top:6px solid #C9C2B4;padding:28px 0 0 0">
+<p style="font-size:24px;font-weight:700;color:#7A7F8C">STAGE 2</p>
+<h3 style="font-size:32px;font-weight:700;line-height:1.2">Experience-centric</h3>
+<p style="font-size:28px;line-height:1.45;color:#4A5263">Smarter search, better recommendations, simpler checkout. UX becomes a business driver.</p>
+</div>
+<div style="display:flex;flex-direction:column;gap:14px;border-top:6px solid #C9C2B4;padding:28px 0 0 0">
+<p style="font-size:24px;font-weight:700;color:#7A7F8C">STAGE 3</p>
+<h3 style="font-size:32px;font-weight:700;line-height:1.2">Feature overload</h3>
+<p style="font-size:28px;line-height:1.45;color:#4A5263">Flash sales, loyalty, AI assistants, wishlists, social proof, all at once.</p>
+</div>
+<div style="display:flex;flex-direction:column;gap:14px;border-top:6px solid #B8461F;padding:28px 0 0 0">
+<p style="font-size:24px;font-weight:700;color:#B8461F">THE NEXT STEP</p>
+<h3 style="font-size:32px;font-weight:700;line-height:1.2">Clarity over complexity</h3>
+<p style="font-size:28px;line-height:1.45;color:#4A5263">Focused interactions that match each user’s current goal.</p>
+</div>
+</div>
+<div style="display:flex;flex-direction:row;gap:24px;background:#ECE8DF;border-radius:20px;padding:32px 40px;align-items:center">
+<p style="font-size:28px;font-weight:700;color:#16213A;white-space:nowrap">UX now moves metrics:</p>
+<p style="font-size:28px;line-height:1.4;color:#4A5263">navigation → discovery · product pages → confidence · checkout → lower abandonment</p>
+</div>
+<aside>Early online retail won on availability, price and the ability to transact. As competition intensified and switching became easy, experience became the differentiator: the shift from transaction-centric to experience-centric commerce. Today UX influences nearly every critical metric, and poor UX can cancel out investments in marketing, pricing or product quality. But in chasing engagement, platforms keep adding features. Each is valuable alone; shown together they cause overload. More functionality does not automatically create a better experience. The best platforms prioritise clarity over complexity.</aside>
+</section>
+</div><a class="num" href="#s5">5 / 36</a></div>
+<div class="frame" id="s6"><div class="stage"><section id="models-contrast" data-transition="fade" style="background:#F6F4EF;color:#16213A;font-family:'DM Sans', Arial, sans-serif;padding:128px;display:flex;flex-direction:column;gap:56px">
+<div style="display:flex;flex-direction:column;gap:20px">
+<p style="font-size:24px;font-weight:700;letter-spacing:3px;text-transform:uppercase;color:#B8461F">04 · Business models</p>
+<h2 style="font-family:'Fraunces', Georgia, serif;font-size:72px;font-weight:400;line-height:1.1;color:#16213A">Same industry, different problems</h2>
+</div>
+<div style="display:grid;grid-template-columns:1fr 1fr;gap:40px">
+<div style="display:flex;flex-direction:column;gap:24px;background:#FDFCF9;border:1px solid #E2DDD2;border-radius:24px;padding:48px">
+<p style="font-size:24px;font-weight:700;letter-spacing:3px;text-transform:uppercase;color:#7A7F8C">Samsung · brand store</p>
+<h3 style="font-family:'Fraunces', Georgia, serif;font-size:44px;font-weight:400;line-height:1.2">“Help me explore one brand’s ecosystem.”</h3>
+<div style="display:flex;flex-direction:row;flex-wrap:wrap;gap:12px">
+<p style="font-size:24px;font-weight:600;background:#ECE8DF;border-radius:40px;padding:10px 22px">Educational</p>
+<p style="font-size:24px;font-weight:600;background:#ECE8DF;border-radius:40px;padding:10px 22px">Brand-driven</p>
+<p style="font-size:24px;font-weight:600;background:#ECE8DF;border-radius:40px;padding:10px 22px">Trust and product value</p>
+</div>
+</div>
+<div style="display:flex;flex-direction:column;gap:24px;background:#16213A;border-radius:24px;padding:48px;color:#F6F4EF">
+<p style="font-size:24px;font-weight:700;letter-spacing:3px;text-transform:uppercase;color:#F0A07C">Amazon · marketplace</p>
+<h3 style="font-family:'Fraunces', Georgia, serif;font-size:44px;font-weight:400;line-height:1.2;color:#F6F4EF">“Help me find the best option among hundreds.”</h3>
+<div style="display:flex;flex-direction:row;flex-wrap:wrap;gap:12px">
+<p style="font-size:24px;font-weight:600;background:#2A3754;color:#F6F4EF;border-radius:40px;padding:10px 22px">Efficiency</p>
+<p style="font-size:24px;font-weight:600;background:#2A3754;color:#F6F4EF;border-radius:40px;padding:10px 22px">Discoverability</p>
+<p style="font-size:24px;font-weight:600;background:#2A3754;color:#F6F4EF;border-radius:40px;padding:10px 22px">Decision support</p>
+</div>
+</div>
+</div>
+<p style="font-size:32px;line-height:1.4;color:#4A5263">UX priorities differ because <b style="color:#16213A">business objectives</b> differ. Patterns don’t transfer automatically.</p>
+<aside>Not all e-commerce platforms serve the same purpose, and borrowing patterns from a successful platform without its context is a common mistake. A Samsung visitor compares Galaxy phones, learns about new tech and sees how products integrate: the experience is educational and reinforces trust. An Amazon visitor is rarely brand-loyal and wants the best product fast, comparing price, reviews, delivery and seller credibility: efficiency beats storytelling.</aside>
+</section>
+</div><a class="num" href="#s6">6 / 36</a></div>
+<div class="frame" id="s7"><div class="stage"><section id="models" data-transition="fade" style="background:#F6F4EF;color:#16213A;font-family:'DM Sans', Arial, sans-serif;padding:128px;display:flex;flex-direction:column;gap:44px">
+<div style="display:flex;flex-direction:column;gap:20px">
+<p style="font-size:24px;font-weight:700;letter-spacing:3px;text-transform:uppercase;color:#B8461F">04 · Business models</p>
+<h2 style="font-family:'Fraunces', Georgia, serif;font-size:72px;font-weight:400;line-height:1.1;color:#16213A">Six models, six sets of UX priorities</h2>
+</div>
+<div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:24px">
+<div style="display:flex;flex-direction:column;gap:10px;background:#FDFCF9;border:1px solid #E2DDD2;border-radius:20px;padding:32px">
+<h3 style="font-size:32px;font-weight:700;line-height:1.2">Brand-owned stores</h3>
+<p style="font-size:24px;color:#B8461F">Apple · Samsung · Nike · Dyson · IKEA</p>
+<p style="font-size:24px;line-height:1.45;color:#4A5263">Storytelling, immersive visuals, demos, rich media; navigation by product family.</p>
+</div>
+<div style="display:flex;flex-direction:column;gap:10px;background:#FDFCF9;border:1px solid #E2DDD2;border-radius:20px;padding:32px">
+<h3 style="font-size:32px;font-weight:700;line-height:1.2">Marketplaces</h3>
+<p style="font-size:24px;color:#B8461F">Amazon · Flipkart · Alibaba · eBay</p>
+<p style="font-size:24px;line-height:1.45;color:#4A5263">Filters, sorting, reviews, seller ratings, delivery; density over emotion.</p>
+</div>
+<div style="display:flex;flex-direction:column;gap:10px;background:#FDFCF9;border:1px solid #E2DDD2;border-radius:20px;padding:32px">
+<h3 style="font-size:32px;font-weight:700;line-height:1.2">Multi-brand retailers</h3>
+<p style="font-size:24px;color:#B8461F">Best Buy · Sephora · Croma · Decathlon</p>
+<p style="font-size:24px;line-height:1.45;color:#4A5263">Discovery plus credibility: comparisons, expert advice, in-store pickup.</p>
+</div>
+<div style="display:flex;flex-direction:column;gap:10px;background:#FDFCF9;border:1px solid #E2DDD2;border-radius:20px;padding:32px">
+<h3 style="font-size:32px;font-weight:700;line-height:1.2">Direct-to-consumer</h3>
+<p style="font-size:24px;color:#B8461F">Allbirds · Nothing · Warby Parker · boAt</p>
+<p style="font-size:24px;line-height:1.45;color:#4A5263">Story plus streamlined buying; community, values, subscriptions.</p>
+</div>
+<div style="display:flex;flex-direction:column;gap:10px;background:#FDFCF9;border:1px solid #E2DDD2;border-radius:20px;padding:32px">
+<h3 style="font-size:32px;font-weight:700;line-height:1.2">Luxury commerce</h3>
+<p style="font-size:24px;color:#B8461F">Rolex · Louis Vuitton · Cartier</p>
+<p style="font-size:24px;line-height:1.45;color:#4A5263">Exclusivity over conversion: minimal, editorial, restrained.</p>
+</div>
+<div style="display:flex;flex-direction:column;gap:10px;background:#FDFCF9;border:1px solid #E2DDD2;border-radius:20px;padding:32px">
+<h3 style="font-size:32px;font-weight:700;line-height:1.2">B2B commerce</h3>
+<p style="font-size:24px;color:#B8461F">Organisational purchasing</p>
+<p style="font-size:24px;line-height:1.45;color:#4A5263">Specs, bulk and account pricing, quotes, procurement, repeat orders.</p>
+</div>
+</div>
+<aside>Brand-owned stores sell their own products and aim to strengthen brand perception; visitors often arrive already interested. Marketplaces aggregate thousands of sellers; users want the most suitable product as efficiently as possible, so storytelling is secondary. Multi-brand retailers sit in between: they own inventory, pricing, fulfilment and service, and must balance efficient discovery with retailer credibility and online-to-offline experiences. D2C brands cut out intermediaries and use their sites to build identity and long-term relationships. Luxury sites reinforce exclusivity rather than maximise immediate conversion; marketplace layouts or aggressive promotions would undermine them. B2B platforms prioritise efficiency, data accuracy, account-based pricing and repeat ordering over visual storytelling.</aside>
+</section>
+</div><a class="num" href="#s7">7 / 36</a></div>
+<div class="frame" id="s8"><div class="stage"><section id="three-questions" data-transition="fade" style="background:#ECE8DF;color:#16213A;font-family:'DM Sans', Arial, sans-serif;padding:128px;display:flex;flex-direction:column;gap:56px">
+<div style="display:flex;flex-direction:column;gap:20px">
+<p style="font-size:24px;font-weight:700;letter-spacing:3px;text-transform:uppercase;color:#B8461F">04 · UX must follow the business model</p>
+<h2 style="font-family:'Fraunces', Georgia, serif;font-size:72px;font-weight:400;line-height:1.1;color:#16213A">Strategy and intent first, design trends last</h2>
+</div>
+<div style="display:flex;flex-direction:column;gap:0px">
+<div style="display:flex;flex-direction:row;gap:40px;align-items:center;border-top:2px solid #C9C2B4;padding:28px 0">
+<p style="font-family:'Fraunces', Georgia, serif;font-size:72px;color:#B8461F;width:80px">1</p>
+<p style="font-size:44px;line-height:1.25">What type of business is this platform supporting?</p>
+</div>
+<div style="display:flex;flex-direction:row;gap:40px;align-items:center;border-top:2px solid #C9C2B4;padding:28px 0">
+<p style="font-family:'Fraunces', Georgia, serif;font-size:72px;color:#B8461F;width:80px">2</p>
+<p style="font-size:44px;line-height:1.25">Why is the user visiting the platform today?</p>
+</div>
+<div style="display:flex;flex-direction:row;gap:40px;align-items:center;border-top:2px solid #C9C2B4;border-bottom:2px solid #C9C2B4;padding:28px 0">
+<p style="font-family:'Fraunces', Georgia, serif;font-size:72px;color:#B8461F;width:80px">3</p>
+<p style="font-size:44px;line-height:1.25">What is the shortest, most confident path from intent to outcome?</p>
+</div>
+</div>
+<aside>Designers often borrow patterns from successful products without considering the context they were created for, producing experiences that look modern but are strategically misaligned. Adding extensive comparison features to a luxury fashion site distracts from its emotional narrative; replacing robust filtering on a marketplace with immersive storytelling makes discovery harder. These three questions are the foundation of the framework.</aside>
+</section>
+</div><a class="num" href="#s8">8 / 36</a></div>
+<div class="frame" id="s9"><div class="stage"><section id="attention" data-transition="fade" style="background:#F6F4EF;color:#16213A;font-family:'DM Sans', Arial, sans-serif;padding:128px;display:flex;flex-direction:column;gap:56px">
+<div style="display:flex;flex-direction:column;gap:20px">
+<p style="font-size:24px;font-weight:700;letter-spacing:3px;text-transform:uppercase;color:#B8461F">05 · The psychology of online shopping</p>
+<h2 style="font-family:'Fraunces', Georgia, serif;font-size:72px;font-weight:400;line-height:1.1;color:#16213A">Every element competes for limited attention</h2>
+</div>
+<div style="display:grid;grid-template-columns:1.25fr 1fr;gap:64px;align-items:center">
+<div style="display:flex;flex-direction:row;flex-wrap:wrap;gap:14px">
+<p style="font-size:28px;font-weight:600;background:#FDFCF9;border:1px solid #D6CFC1;border-radius:40px;padding:14px 26px">Hero carousel</p>
+<p style="font-size:28px;font-weight:600;background:#FDFCF9;border:1px solid #D6CFC1;border-radius:40px;padding:14px 26px">Flash sale banner</p>
+<p style="font-size:28px;font-weight:600;background:#FDFCF9;border:1px solid #D6CFC1;border-radius:40px;padding:14px 26px">Discount popup</p>
+<p style="font-size:28px;font-weight:600;background:#FDFCF9;border:1px solid #D6CFC1;border-radius:40px;padding:14px 26px">Newsletter signup</p>
+<p style="font-size:28px;font-weight:600;background:#FDFCF9;border:1px solid #D6CFC1;border-radius:40px;padding:14px 26px">Loyalty rewards</p>
+<p style="font-size:28px;font-weight:600;background:#FDFCF9;border:1px solid #D6CFC1;border-radius:40px;padding:14px 26px">Recommended</p>
+<p style="font-size:28px;font-weight:600;background:#FDFCF9;border:1px solid #D6CFC1;border-radius:40px;padding:14px 26px">Trending</p>
+<p style="font-size:28px;font-weight:600;background:#FDFCF9;border:1px solid #D6CFC1;border-radius:40px;padding:14px 26px">Recently viewed</p>
+<p style="font-size:28px;font-weight:600;background:#FDFCF9;border:1px solid #D6CFC1;border-radius:40px;padding:14px 26px">Floating chat widget</p>
+<p style="font-size:28px;font-weight:600;background:#FDFCF9;border:1px solid #D6CFC1;border-radius:40px;padding:14px 26px">Multiple menus</p>
+</div>
+<div style="display:flex;flex-direction:column;gap:28px;background:#16213A;border-radius:24px;padding:48px">
+<p style="font-family:'Fraunces', Georgia, serif;font-size:44px;line-height:1.25;color:#F6F4EF">10 elements.<br>1 user’s attention.</p>
+<p style="font-size:28px;line-height:1.45;color:#BFC8D9">Each has a valid business purpose. The issue is that they are all visible at once.</p>
+<p style="font-size:28px;line-height:1.45;color:#F0A07C">More load = slower, less confident users who abandon.</p>
+</div>
+</div>
+<aside>Human working memory has limited capacity, and every banner, button, notification or card asks users to process information and decide. This imagined homepage holds a hero carousel, flash sale banner, discount popup, newsletter signup, loyalty rewards, recommended, trending and recently viewed products, a floating chat widget and multiple navigation menus. Good UX is not about adding functionality; it is about reducing unnecessary mental effort.</aside>
+</section>
+</div><a class="num" href="#s9">9 / 36</a></div>
+<div class="frame" id="s10"><div class="stage"><section id="psychology" data-transition="fade" style="background:#F6F4EF;color:#16213A;font-family:'DM Sans', Arial, sans-serif;padding:128px;display:flex;flex-direction:column;gap:44px">
+<div style="display:flex;flex-direction:column;gap:20px">
+<p style="font-size:24px;font-weight:700;letter-spacing:3px;text-transform:uppercase;color:#B8461F">05 · The psychology of online shopping</p>
+<h2 style="font-family:'Fraunces', Georgia, serif;font-size:72px;font-weight:400;line-height:1.1;color:#16213A">Seven truths about how people shop</h2>
+</div>
+<div style="display:grid;grid-template-columns:1fr 1fr 1fr 1fr;gap:24px">
+<div style="display:flex;flex-direction:column;gap:12px;background:#FDFCF9;border:1px solid #E2DDD2;border-radius:20px;padding:32px">
+<h3 style="font-size:32px;font-weight:700;line-height:1.2"><span style="color:#B8461F">01</span> Users scan</h3>
+<p style="font-size:24px;line-height:1.45;color:#4A5263">They look for what’s sold, whether to trust it and where to start.</p>
+</div>
+<div style="display:flex;flex-direction:column;gap:12px;background:#FDFCF9;border:1px solid #E2DDD2;border-radius:20px;padding:32px">
+<h3 style="font-size:32px;font-weight:700;line-height:1.2"><span style="color:#B8461F">02</span> Load costs</h3>
+<p style="font-size:24px;line-height:1.45;color:#4A5263">Working memory is limited; every element demands processing.</p>
+</div>
+<div style="display:flex;flex-direction:column;gap:12px;background:#FDFCF9;border:1px solid #E2DDD2;border-radius:20px;padding:32px">
+<h3 style="font-size:32px;font-weight:700;line-height:1.2"><span style="color:#B8461F">03</span> Choice tires</h3>
+<p style="font-size:24px;line-height:1.45;color:#4A5263">Category, product, brand, colour, size, delivery, payment: each drains energy.</p>
+</div>
+<div style="display:flex;flex-direction:column;gap:12px;background:#FDFCF9;border:1px solid #E2DDD2;border-radius:20px;padding:32px">
+<h3 style="font-size:32px;font-weight:700;line-height:1.2"><span style="color:#B8461F">04</span> Trust builds</h3>
+<p style="font-size:24px;line-height:1.45;color:#4A5263">Credibility is judged from the first second, not just at payment.</p>
+</div>
+<div style="display:flex;flex-direction:column;gap:12px;background:#FDFCF9;border:1px solid #E2DDD2;border-radius:20px;padding:32px">
+<h3 style="font-size:32px;font-weight:700;line-height:1.2"><span style="color:#B8461F">05</span> Recognise</h3>
+<p style="font-size:24px;line-height:1.45;color:#4A5263">Beats recall: recently viewed, saved filters, persistent carts, history.</p>
+</div>
+<div style="display:flex;flex-direction:column;gap:12px;background:#FDFCF9;border:1px solid #E2DDD2;border-radius:20px;padding:32px">
+<h3 style="font-size:32px;font-weight:700;line-height:1.2"><span style="color:#B8461F">06</span> Momentum</h3>
+<p style="font-size:24px;line-height:1.45;color:#4A5263">Each step builds toward the next; interruptions reset it.</p>
+</div>
+<div style="display:flex;flex-direction:column;gap:12px;background:#FDFCF9;border:1px solid #E2DDD2;border-radius:20px;padding:32px">
+<h3 style="font-size:32px;font-weight:700;line-height:1.2"><span style="color:#B8461F">07</span> Emotion</h3>
+<p style="font-size:24px;line-height:1.45;color:#4A5263">Reviews, delivery dates and return policies reassure before money is spent.</p>
+</div>
+<div style="display:flex;flex-direction:column;justify-content:center;gap:12px;background:#16213A;border-radius:20px;padding:32px">
+<p style="font-family:'Fraunces', Georgia, serif;font-size:32px;line-height:1.3;color:#F6F4EF">Users want their goal with the least mental effort.</p>
+</div>
+</div>
+<aside>1. Users scan rather than read; on landing they ask what the site sells, whether they can trust it, where to start, and whether they can find things quickly. Clarity and visual hierarchy answer these instantly. 2. Every decision has a cost: working memory is limited. 3. Decision fatigue: a checkout page that pushes browsing, loyalty sign-up, coupons and blog posts forces users to reconsider a decision already made. 4. Trust accumulates through professional design, transparent pricing, authentic reviews, delivery information, support and consistency, so users arrive at payment already convinced. 5. Recognition is easier than recall, so make information visible when needed. 6. Momentum: discovery leads to comparison, evaluation, confidence and purchase. 7. Emotion: a confusing error frustrates, a slow page creates impatience, an unexpected shipping charge disappoints; clear confirmations and transparent pricing build confidence. The challenge is deciding when features should be visible, not which features to have.</aside>
+</section>
+</div><a class="num" href="#s10">10 / 36</a></div>
+<div class="frame" id="s11"><div class="stage"><section id="momentum" data-transition="fade" style="background:#F6F4EF;color:#16213A;font-family:'DM Sans', Arial, sans-serif;padding:128px;display:flex;flex-direction:column;gap:56px">
+<div style="display:flex;flex-direction:column;gap:20px">
+<p style="font-size:24px;font-weight:700;letter-spacing:3px;text-transform:uppercase;color:#B8461F">05 · Momentum matters</p>
+<h2 style="font-family:'Fraunces', Georgia, serif;font-size:72px;font-weight:400;line-height:1.1;color:#16213A">Protect the momentum toward purchase</h2>
+</div>
+<div style="display:flex;flex-direction:row;align-items:center;justify-content:space-between;gap:16px">
+<p style="font-size:32px;font-weight:600;background:#ECE8DF;border-radius:16px;padding:22px 30px">Discover</p>
+<x-shape kind="arrow-right" style="background:#C9C2B4;width:56px;height:28px"></x-shape>
+<p style="font-size:32px;font-weight:600;background:#E2DDD2;border-radius:16px;padding:22px 30px">Compare</p>
+<x-shape kind="arrow-right" style="background:#C9C2B4;width:56px;height:28px"></x-shape>
+<p style="font-size:32px;font-weight:600;background:#D6CFC1;border-radius:16px;padding:22px 30px">Evaluate</p>
+<x-shape kind="arrow-right" style="background:#C9C2B4;width:56px;height:28px"></x-shape>
+<p style="font-size:32px;font-weight:600;background:#2A3754;color:#F6F4EF;border-radius:16px;padding:22px 30px">Confidence</p>
+<x-shape kind="arrow-right" style="background:#C9C2B4;width:56px;height:28px"></x-shape>
+<p style="font-size:32px;font-weight:600;background:#B8461F;color:#FBF4EE;border-radius:16px;padding:22px 30px">Purchase</p>
+</div>
+<div style="display:grid;grid-template-columns:1.3fr 1fr;gap:48px;align-items:center">
+<div style="display:flex;flex-direction:column;gap:16px;background:#FDFCF9;border:1px solid #E2DDD2;border-radius:20px;padding:40px">
+<p style="font-size:28px;font-weight:700">By the time they click “Proceed to Checkout”, users have already:</p>
+<div style="display:grid;grid-template-columns:1fr 1fr;gap:12px 32px">
+<p style="font-size:28px;color:#4A5263">✓  Found a product</p>
+<p style="font-size:28px;color:#4A5263">✓  Compared alternatives</p>
+<p style="font-size:28px;color:#4A5263">✓  Evaluated reviews</p>
+<p style="font-size:28px;color:#4A5263">✓  Accepted the price</p>
+<p style="font-size:28px;color:#4A5263">✓  Added it to the cart</p>
+</div>
+</div>
+<p style="font-family:'Fraunces', Georgia, serif;font-size:44px;line-height:1.3;color:#16213A">Unrelated promotions now only invite them to <i style="color:#B8461F">reconsider</i>.</p>
+</div>
+<aside>Shopping is a continuous flow, not isolated actions. Each successful interaction builds momentum toward the next. Presenting unrelated promotions or encouraging more browsing at checkout resets part of the decision process. The most effective interfaces remove distractions as purchase intent increases.</aside>
+</section>
+</div><a class="num" href="#s11">11 / 36</a></div>
+<div class="frame" id="s12"><div class="stage"><section id="core-principle" data-transition="fade" style="background:#16213A;color:#F6F4EF;font-family:'DM Sans', Arial, sans-serif;padding:128px;display:flex;flex-direction:column;justify-content:center;gap:48px">
+<div style="position:absolute;left:0;top:0;width:24px;height:1080px;background:#E07A4F"></div>
+<p style="font-size:24px;font-weight:700;letter-spacing:3px;text-transform:uppercase;color:#F0A07C">06 · The Context-Aware UX Framework · Core principle</p>
+<h2 style="font-family:'Fraunces', Georgia, serif;font-size:72px;font-weight:400;line-height:1.15;color:#F6F4EF">Every interface element should <i style="color:#F0A07C">justify its presence</i> by helping the user achieve their immediate goal.</h2>
+<p style="font-size:32px;line-height:1.45;color:#BFC8D9">CAUX doesn’t remove features. It presents them when they are most relevant.</p>
+<aside>Most interfaces are static: the same navigation, banners, recommendation widgets, wishlists and campaigns persist on every page. CAUX designs around user intent instead of pages, features or business departments. Example: a wishlist is valuable, but a customer entering payment probably doesn’t need it. A weekend-sale banner may work on the homepage, but at checkout it introduces an alternative decision at the exact moment the user has committed.</aside>
+</section>
+</div><a class="num" href="#s12">12 / 36</a></div>
+<div class="frame" id="s13"><div class="stage"><section id="intent-shift" data-transition="fade" style="background:#F6F4EF;color:#16213A;font-family:'DM Sans', Arial, sans-serif;padding:128px;display:flex;flex-direction:column;gap:56px">
+<div style="display:flex;flex-direction:column;gap:20px">
+<p style="font-size:24px;font-weight:700;letter-spacing:3px;text-transform:uppercase;color:#B8461F">06 · The shift</p>
+<h2 style="font-family:'Fraunces', Georgia, serif;font-size:72px;font-weight:400;line-height:1.1;color:#16213A">From feature-centric to intent-centric</h2>
+</div>
+<div style="display:grid;grid-template-columns:1fr 1fr;gap:40px">
+<div style="display:flex;flex-direction:column;gap:0px;background:#ECE8DF;border-radius:24px;padding:44px">
+<p style="font-size:24px;font-weight:700;letter-spacing:3px;text-transform:uppercase;color:#6B6F7A;padding:0 0 20px 0">Feature-centric</p>
+<p style="font-size:32px;line-height:1.35;color:#4A5263;border-top:1px solid #C9C2B4;padding:20px 0">“What features should we include?”</p>
+<p style="font-size:32px;line-height:1.35;color:#4A5263;border-top:1px solid #C9C2B4;padding:20px 0">Every team competes for visibility</p>
+<p style="font-size:32px;line-height:1.35;color:#4A5263;border-top:1px solid #C9C2B4;padding:20px 0">Same banners and widgets on every page</p>
+<p style="font-size:32px;line-height:1.35;color:#4A5263;border-top:1px solid #C9C2B4;padding:20px 0">A static interface</p>
+</div>
+<div style="display:flex;flex-direction:column;gap:0px;background:#16213A;border-radius:24px;padding:44px">
+<p style="font-size:24px;font-weight:700;letter-spacing:3px;text-transform:uppercase;color:#F0A07C;padding:0 0 20px 0">Intent-centric</p>
+<p style="font-size:32px;line-height:1.35;color:#F6F4EF;border-top:1px solid #3A4766;padding:20px 0">“What does the user need right now?”</p>
+<p style="font-size:32px;line-height:1.35;color:#F6F4EF;border-top:1px solid #3A4766;padding:20px 0">One objective per moment</p>
+<p style="font-size:32px;line-height:1.35;color:#F6F4EF;border-top:1px solid #3A4766;padding:20px 0">Irrelevant features postponed, not deleted</p>
+<p style="font-size:32px;line-height:1.35;color:#F6F4EF;border-top:1px solid #3A4766;padding:20px 0">An interface that evolves with intent</p>
+</div>
+</div>
+<aside>Digital products grow by adding functionality, and over time every team competes for visibility: marketing wants promotional banners, merchandising wants featured products, loyalty teams want reward programmes, support wants chat widgets. The result is a homepage where everything claims equal importance. Users arrive with a single objective, such as finding a laptop, checking delivery or paying. Intent-centric design asks whether a feature contributes to the current task; if not, its visibility is reduced or postponed.</aside>
+</section>
+</div><a class="num" href="#s13">13 / 36</a></div>
+<div class="frame" id="s14"><div class="stage"><section id="principles" data-transition="fade" style="background:#F6F4EF;color:#16213A;font-family:'DM Sans', Arial, sans-serif;padding:128px;display:flex;flex-direction:column;gap:36px">
+<div style="display:flex;flex-direction:column;gap:20px">
+<p style="font-size:24px;font-weight:700;letter-spacing:3px;text-transform:uppercase;color:#B8461F">06 · The framework</p>
+<h2 style="font-family:'Fraunces', Georgia, serif;font-size:72px;font-weight:400;line-height:1.1;color:#16213A">The seven principles of CAUX</h2>
+</div>
+<div style="display:grid;grid-template-columns:1fr 1fr 1fr 1fr;gap:24px">
+<div style="display:flex;flex-direction:column;gap:10px;background:#FDFCF9;border:1px solid #E2DDD2;border-radius:20px;padding:28px">
+<p style="font-family:'Fraunces', Georgia, serif;font-size:32px;color:#B8461F">01</p>
+<h3 style="font-size:32px;font-weight:700;line-height:1.2">Goal-First Design</h3>
+<p style="font-size:24px;line-height:1.45;color:#4A5263">One dominant purpose per page; secondary actions never compete.</p>
+</div>
+<div style="display:flex;flex-direction:column;gap:10px;background:#FDFCF9;border:1px solid #E2DDD2;border-radius:20px;padding:28px">
+<p style="font-family:'Fraunces', Georgia, serif;font-size:32px;color:#B8461F">02</p>
+<h3 style="font-size:32px;font-weight:700;line-height:1.2">Contextual Feature Exposure</h3>
+<p style="font-size:24px;line-height:1.45;color:#4A5263">Feature visibility changes as intent changes.</p>
+</div>
+<div style="display:flex;flex-direction:column;gap:10px;background:#FDFCF9;border:1px solid #E2DDD2;border-radius:20px;padding:28px">
+<p style="font-family:'Fraunces', Georgia, serif;font-size:32px;color:#B8461F">03</p>
+<h3 style="font-size:32px;font-weight:700;line-height:1.2">Progressive Disclosure</h3>
+<p style="font-size:24px;line-height:1.45;color:#4A5263">Information unfolds as interest deepens.</p>
+</div>
+<div style="display:flex;flex-direction:column;gap:10px;background:#FDFCF9;border:1px solid #E2DDD2;border-radius:20px;padding:28px">
+<p style="font-family:'Fraunces', Georgia, serif;font-size:32px;color:#B8461F">04</p>
+<h3 style="font-size:32px;font-weight:700;line-height:1.2">Decision Momentum</h3>
+<p style="font-size:24px;line-height:1.45;color:#4A5263">Protect forward progress in high-intent stages.</p>
+</div>
+<div style="display:flex;flex-direction:column;gap:10px;background:#FDFCF9;border:1px solid #E2DDD2;border-radius:20px;padding:28px">
+<p style="font-family:'Fraunces', Georgia, serif;font-size:32px;color:#B8461F">05</p>
+<h3 style="font-size:32px;font-weight:700;line-height:1.2">Visual Priority Hierarchy</h3>
+<p style="font-size:24px;line-height:1.45;color:#4A5263">Show importance through hierarchy, not volume.</p>
+</div>
+<div style="display:flex;flex-direction:column;gap:10px;background:#FDFCF9;border:1px solid #E2DDD2;border-radius:20px;padding:28px">
+<p style="font-family:'Fraunces', Georgia, serif;font-size:32px;color:#B8461F">06</p>
+<h3 style="font-size:32px;font-weight:700;line-height:1.2">Checkout Isolation</h3>
+<p style="font-size:24px;line-height:1.45;color:#4A5263">Remove distractions from a task users chose to finish.</p>
+</div>
+<div style="display:flex;flex-direction:column;gap:10px;background:#FDFCF9;border:1px solid #E2DDD2;border-radius:20px;padding:28px">
+<p style="font-family:'Fraunces', Georgia, serif;font-size:32px;color:#B8461F">07</p>
+<h3 style="font-size:32px;font-weight:700;line-height:1.2">Trust Accumulation</h3>
+<p style="font-size:24px;line-height:1.45;color:#4A5263">Confidence grows at every stage, not only at payment.</p>
+</div>
+<div style="display:flex;flex-direction:column;justify-content:center;gap:12px;background:#16213A;border-radius:20px;padding:28px">
+<p style="font-family:'Fraunces', Georgia, serif;font-size:32px;line-height:1.3;color:#F6F4EF">No new components. A new way to <i style="color:#F0A07C">prioritise</i> them.</p>
+</div>
+</div>
+<aside>1 Goal-First: homepage orients, listing compares, product page reduces uncertainty, checkout completes; competing objectives are friction. 2 Contextual Feature Exposure: features appear when relevant (see next slide). 3 Progressive Disclosure: a product card needs only image, name, price, rating; specs, warranty and reviews come once the user opens the product. 4 Decision Momentum: after comparing, choosing a variant and adding to cart, don’t pull users back out. 5 Visual Priority Hierarchy: distinguish primary actions, supporting information, secondary actions and optional functionality. 6 Checkout Isolation: minimise global navigation, banners, category links and unrelated recommendations. 7 Trust Accumulation: trust is the cumulative outcome of hundreds of design decisions. CAUX changes how existing components are prioritised: the experience becomes an evolving conversation between user and interface.</aside>
+</section>
+</div><a class="num" href="#s14">14 / 36</a></div>
+<div class="frame" id="s15"><div class="stage"><section id="exposure" data-transition="fade" style="background:#F6F4EF;color:#16213A;font-family:'DM Sans', Arial, sans-serif;padding:128px;display:flex;flex-direction:column;gap:56px">
+<div style="display:flex;flex-direction:column;gap:20px">
+<p style="font-size:24px;font-weight:700;letter-spacing:3px;text-transform:uppercase;color:#B8461F">06 · Principles in practice</p>
+<h2 style="font-family:'Fraunces', Georgia, serif;font-size:72px;font-weight:400;line-height:1.1;color:#16213A">The right feature at the right moment</h2>
+</div>
+<div style="display:grid;grid-template-columns:1.45fr 1fr;gap:56px">
+<div style="display:flex;flex-direction:column;gap:20px">
+<p style="font-size:24px;font-weight:700;letter-spacing:3px;text-transform:uppercase;color:#6B6F7A">Contextual feature exposure</p>
+<table style="font-size:28px;color:#16213A">
+<tr><th style="width:40%">Feature</th><th style="width:60%">Most valuable during</th></tr>
+<tr><td>Wishlist</td><td>Exploration and evaluation</td></tr>
+<tr><td>Product comparison</td><td>Before deciding, not at payment</td></tr>
+<tr><td>Coupons</td><td>Cart and checkout</td></tr>
+<tr><td>Order tracking</td><td>Post-purchase</td></tr>
+<tr><td>Recommendations</td><td>Early discovery; distracting at checkout</td></tr>
+</table>
+</div>
+<div style="display:flex;flex-direction:column;gap:20px">
+<p style="font-size:24px;font-weight:700;letter-spacing:3px;text-transform:uppercase;color:#6B6F7A">Progressive disclosure</p>
+<div style="display:flex;flex-direction:column;gap:10px;background:#FDFCF9;border:1px solid #E2DDD2;border-radius:20px;padding:28px">
+<div style="height:120px;background:#ECE8DF;border-radius:12px"></div>
+<p style="font-size:28px;font-weight:700">Product name</p>
+<p style="font-size:28px;color:#4A5263">Price · ★ Rating</p>
+</div>
+<p style="font-size:24px;color:#4A5263">Opened product page reveals:</p>
+<div style="display:flex;flex-direction:row;flex-wrap:wrap;gap:10px">
+<p style="font-size:24px;font-weight:600;background:#16213A;color:#F6F4EF;border-radius:40px;padding:10px 20px">Specifications</p>
+<p style="font-size:24px;font-weight:600;background:#16213A;color:#F6F4EF;border-radius:40px;padding:10px 20px">Warranty</p>
+<p style="font-size:24px;font-weight:600;background:#16213A;color:#F6F4EF;border-radius:40px;padding:10px 20px">Reviews</p>
+</div>
+</div>
+</div>
+<aside>Not every feature should stay visible throughout the journey; visibility should follow intent. Exposing features contextually keeps interfaces focused without sacrificing functionality. Progressive disclosure means users don’t need everything at once: an initial product card needs only image, name, price and rating. Detailed specifications, warranty information and reviews become relevant once the user signals interest by opening the product page.</aside>
+</section>
+</div><a class="num" href="#s15">15 / 36</a></div>
+<div class="frame" id="s16"><div class="stage"><section id="visibility-map" data-transition="fade" style="background:#F6F4EF;color:#16213A;font-family:'DM Sans', Arial, sans-serif;padding:128px;display:flex;flex-direction:column;gap:36px">
+<div style="display:flex;flex-direction:column;gap:20px">
+<p style="font-size:24px;font-weight:700;letter-spacing:3px;text-transform:uppercase;color:#B8461F">06 · Team tool · Feature-visibility map</p>
+<h2 style="font-family:'Fraunces', Georgia, serif;font-size:72px;font-weight:400;line-height:1.1;color:#16213A">What to show at each stage</h2>
+</div>
+<table style="font-size:24px;color:#16213A">
+<tr><th style="width:23%">Feature</th><th style="width:11%">Aware</th><th style="width:11%">Explore</th><th style="width:11%">Evaluate</th><th style="width:11%">Decide</th><th style="width:11%">Purchase</th><th style="width:11%">Post</th><th style="width:11%">Loyalty</th></tr>
+<tr><td>Global navigation</td><td>Show</td><td>Show</td><td>Show</td><td style="color:#5E6371">Low</td><td style="color:#B8461F">Hide</td><td style="color:#5E6371">Low</td><td>Show</td></tr>
+<tr><td>Promotional banners</td><td style="color:#5E6371">Low</td><td style="color:#5E6371">Low</td><td style="color:#B8461F">Hide</td><td style="color:#B8461F">Hide</td><td style="color:#B8461F">Hide</td><td style="color:#B8461F">Hide</td><td style="color:#5E6371">Low</td></tr>
+<tr><td>Wishlist</td><td style="color:#5E6371">Low</td><td>Show</td><td>Show</td><td style="color:#5E6371">Low</td><td style="color:#B8461F">Hide</td><td style="color:#B8461F">Hide</td><td>Show</td></tr>
+<tr><td>Product comparison</td><td style="color:#B8461F">Hide</td><td>Show</td><td>Show</td><td style="color:#5E6371">Low</td><td style="color:#B8461F">Hide</td><td style="color:#B8461F">Hide</td><td style="color:#5E6371">Low</td></tr>
+<tr><td>Recommendations</td><td>Show</td><td>Show</td><td style="color:#5E6371">Low</td><td style="color:#B8461F">Hide</td><td style="color:#B8461F">Hide</td><td style="color:#5E6371">Low</td><td>Show</td></tr>
+<tr><td>Reviews and ratings</td><td style="color:#5E6371">Low</td><td>Show</td><td>Show</td><td>Show</td><td style="color:#B8461F">Hide</td><td style="color:#B8461F">Hide</td><td style="color:#5E6371">Low</td></tr>
+<tr><td>Delivery and returns</td><td>Show</td><td>Show</td><td>Show</td><td>Show</td><td>Show</td><td>Show</td><td style="color:#5E6371">Low</td></tr>
+<tr><td>Coupons</td><td style="color:#B8461F">Hide</td><td style="color:#B8461F">Hide</td><td style="color:#B8461F">Hide</td><td>Show</td><td>Show</td><td style="color:#B8461F">Hide</td><td style="color:#5E6371">Low</td></tr>
+<tr><td>Order tracking</td><td style="color:#B8461F">Hide</td><td style="color:#B8461F">Hide</td><td style="color:#B8461F">Hide</td><td style="color:#B8461F">Hide</td><td style="color:#B8461F">Hide</td><td>Show</td><td>Show</td></tr>
+<tr><td>Loyalty rewards</td><td style="color:#5E6371">Low</td><td style="color:#5E6371">Low</td><td style="color:#B8461F">Hide</td><td style="color:#B8461F">Hide</td><td style="color:#B8461F">Hide</td><td style="color:#5E6371">Low</td><td>Show</td></tr>
+</table>
+<p style="font-size:24px;color:#5E6371">Show = prominent · Low = available, not prominent · Hide = out of view · tune per business model</p>
+<aside>This expands the contextual-feature-exposure principle into a grid the team can use in design reviews. It is derived from the paper’s guidance: wishlists matter in exploration and evaluation; comparison before the decision, not at payment; coupons in cart and checkout; order tracking after purchase; recommendations early, never at checkout, and only after confirmation post-purchase; delivery and return information builds trust at every stage; navigation and promotions are minimised in checkout. Treat individual cells as a starting point to debate, not a rule. A luxury brand and a marketplace would fill some cells differently.</aside>
+</section>
+</div><a class="num" href="#s16">16 / 36</a></div>
+<div class="frame" id="s17"><div class="stage"><section id="ownership" data-transition="fade" style="background:#F6F4EF;color:#16213A;font-family:'DM Sans', Arial, sans-serif;padding:128px;display:flex;flex-direction:column;gap:48px">
+<div style="display:flex;flex-direction:column;gap:20px">
+<p style="font-size:24px;font-weight:700;letter-spacing:3px;text-transform:uppercase;color:#B8461F">06 · Team tool · Who owns what</p>
+<h2 style="font-family:'Fraunces', Georgia, serif;font-size:72px;font-weight:400;line-height:1.1;color:#16213A">Where each team’s content belongs</h2>
+</div>
+<table style="font-size:28px;color:#16213A">
+<tr><th style="width:22%">Team</th><th style="width:36%">Wants visible</th><th style="width:42%">Where it earns its place</th></tr>
+<tr><td>Marketing</td><td>Campaigns, promo banners</td><td>Awareness and loyalty; never checkout</td></tr>
+<tr><td>Merchandising</td><td>Featured products, collections</td><td>Exploration; a few on the homepage</td></tr>
+<tr><td>Product content</td><td>Specs, reviews, FAQs</td><td>Evaluation and decision</td></tr>
+<tr><td>Loyalty</td><td>Rewards, memberships</td><td>Post-purchase and returning users</td></tr>
+<tr><td>Support</td><td>Chat, help centre</td><td>On demand; prominent after purchase</td></tr>
+</table>
+<div style="display:flex;flex-direction:row;gap:28px;align-items:center;background:#16213A;border-radius:20px;padding:32px 40px">
+<p style="font-size:28px;font-weight:700;color:#F0A07C;white-space:nowrap">The ground rule</p>
+<p style="font-size:28px;line-height:1.4;color:#F6F4EF">Visibility is earned by relevance to the user’s current stage, not by team priority.</p>
+</div>
+<aside>The paper describes how digital products accumulate features as each team competes for visibility, ending in a homepage where every component claims equal importance. This slide gives the team a shared answer to “where should my thing go?”. It is a suggested mapping based on the journey stages in the paper; agree the final version with stakeholders.</aside>
+</section>
+</div><a class="num" href="#s17">17 / 36</a></div>
+<div class="frame" id="s18"><div class="stage"><section id="decision-test" data-transition="fade" style="background:#ECE8DF;color:#16213A;font-family:'DM Sans', Arial, sans-serif;padding:128px;display:flex;flex-direction:column;gap:56px">
+<div style="display:flex;flex-direction:column;gap:20px">
+<p style="font-size:24px;font-weight:700;letter-spacing:3px;text-transform:uppercase;color:#B8461F">06 · Applying the framework</p>
+<h2 style="font-family:'Fraunces', Georgia, serif;font-size:72px;font-weight:400;line-height:1.1;color:#16213A">The CAUX decision test</h2>
+</div>
+<div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:32px">
+<div style="display:flex;flex-direction:column;gap:20px;background:#FDFCF9;border-radius:24px;padding:44px">
+<x-icon name="CheckCircle" style="color:#B8461F;width:56px;height:56px"></x-icon>
+<h3 style="font-family:'Fraunces', Georgia, serif;font-size:44px;font-weight:400;line-height:1.2">Does it help the current goal?</h3>
+</div>
+<div style="display:flex;flex-direction:column;gap:20px;background:#FDFCF9;border-radius:24px;padding:44px">
+<x-icon name="Lightbulb" style="color:#B8461F;width:56px;height:56px"></x-icon>
+<h3 style="font-family:'Fraunces', Georgia, serif;font-size:44px;font-weight:400;line-height:1.2">Does it reduce cognitive effort?</h3>
+</div>
+<div style="display:flex;flex-direction:column;gap:20px;background:#FDFCF9;border-radius:24px;padding:44px">
+<x-icon name="Trust" style="color:#B8461F;width:56px;height:56px"></x-icon>
+<h3 style="font-family:'Fraunces', Georgia, serif;font-size:44px;font-weight:400;line-height:1.2">Does it build trust at this stage?</h3>
+</div>
+</div>
+<div style="display:flex;flex-direction:row;gap:32px;align-items:center;background:#16213A;border-radius:20px;padding:36px 44px">
+<p style="font-size:32px;font-weight:700;color:#F0A07C;white-space:nowrap">None of the three?</p>
+<p style="font-size:32px;line-height:1.4;color:#F6F4EF">Reconsider its visibility. Relevance over quantity, purpose over presence.</p>
+</div>
+<aside>Every interface element is evaluated with three questions: Does this help the user accomplish their current goal? Does this reduce cognitive effort rather than increase it? Does this improve confidence or trust at this stage of the journey? If an element satisfies none, its visibility should be reconsidered.</aside>
+</section>
+</div><a class="num" href="#s18">18 / 36</a></div>
+<div class="frame" id="s19"><div class="stage"><section id="audit" data-transition="fade" style="background:#F6F4EF;color:#16213A;font-family:'DM Sans', Arial, sans-serif;padding:128px;display:flex;flex-direction:column;gap:48px">
+<div style="display:flex;flex-direction:column;gap:20px">
+<p style="font-size:24px;font-weight:700;letter-spacing:3px;text-transform:uppercase;color:#B8461F">06 · Team tool · Page audit</p>
+<h2 style="font-family:'Fraunces', Georgia, serif;font-size:72px;font-weight:400;line-height:1.1;color:#16213A">Run the decision test on a real page</h2>
+</div>
+<div style="display:grid;grid-template-columns:1fr 1.6fr;gap:56px">
+<div style="display:flex;flex-direction:column;gap:0px">
+<div style="display:flex;flex-direction:row;gap:20px;border-top:1px solid #D6CFC1;padding:20px 0"><p style="font-family:'Fraunces', Georgia, serif;font-size:32px;color:#B8461F">1</p><p style="font-size:28px;line-height:1.35">List every element on the page</p></div>
+<div style="display:flex;flex-direction:row;gap:20px;border-top:1px solid #D6CFC1;padding:20px 0"><p style="font-family:'Fraunces', Georgia, serif;font-size:32px;color:#B8461F">2</p><p style="font-size:28px;line-height:1.35">Name the page’s journey stage and its one goal</p></div>
+<div style="display:flex;flex-direction:row;gap:20px;border-top:1px solid #D6CFC1;padding:20px 0"><p style="font-family:'Fraunces', Georgia, serif;font-size:32px;color:#B8461F">3</p><p style="font-size:28px;line-height:1.35">Ask the three questions of each element</p></div>
+<div style="display:flex;flex-direction:row;gap:20px;border-top:1px solid #D6CFC1;border-bottom:1px solid #D6CFC1;padding:20px 0"><p style="font-family:'Fraunces', Georgia, serif;font-size:32px;color:#B8461F">4</p><p style="font-size:28px;line-height:1.35">Keep it, move it to a better stage, or remove it</p></div>
+</div>
+<div style="display:flex;flex-direction:column;gap:16px">
+<p style="font-size:24px;font-weight:700;letter-spacing:3px;text-transform:uppercase;color:#5E6371">Example · checkout page</p>
+<table style="font-size:24px;color:#16213A">
+<tr><th style="width:32%">Element</th><th style="width:15%">Goal?</th><th style="width:15%">Effort?</th><th style="width:15%">Trust?</th><th style="width:23%">Verdict</th></tr>
+<tr><td>Order summary</td><td>Yes</td><td>Yes</td><td>Yes</td><td>Keep</td></tr>
+<tr><td>Security message</td><td>Yes</td><td>No</td><td>Yes</td><td>Keep</td></tr>
+<tr><td>Coupon field</td><td>Yes</td><td>No</td><td>No</td><td>Keep, collapsed</td></tr>
+<tr><td>Wishlist link</td><td>No</td><td>No</td><td>No</td><td style="color:#B8461F">Move to explore</td></tr>
+<tr><td>Flash sale banner</td><td>No</td><td>No</td><td>No</td><td style="color:#B8461F">Remove</td></tr>
+<tr><td>Full site menu</td><td>No</td><td>No</td><td>No</td><td style="color:#B8461F">Remove</td></tr>
+</table>
+</div>
+</div>
+<aside>A practical way to run the CAUX decision test in a design review. The three questions are: does it help the current goal, does it reduce cognitive effort, does it build trust at this stage. The paper’s rule is that an element meeting none of them should have its visibility reconsidered. The example verdicts are illustrative; run the exercise on your own pages.</aside>
+</section>
+</div><a class="num" href="#s19">19 / 36</a></div>
+<div class="frame" id="s20"><div class="stage"><section id="journey" data-transition="fade" style="background:#F6F4EF;color:#16213A;font-family:'DM Sans', Arial, sans-serif;padding:128px;display:flex;flex-direction:column;gap:44px">
+<div style="display:flex;flex-direction:column;gap:20px">
+<p style="font-size:24px;font-weight:700;letter-spacing:3px;text-transform:uppercase;color:#B8461F">07 · The modern shopping journey</p>
+<h2 style="font-family:'Fraunces', Georgia, serif;font-size:72px;font-weight:400;line-height:1.1;color:#16213A">Users think in goals, not pages</h2>
+</div>
+<table style="font-size:28px;color:#16213A">
+<tr><th style="width:22%">Stage</th><th style="width:42%">The user is asking</th><th style="width:36%">The interface should</th></tr>
+<tr><td>1  Awareness</td><td>“Am I in the right place?”</td><td>Orient and build clarity</td></tr>
+<tr><td>2  Exploration</td><td>“What options do I have?”</td><td>Make finding products fast</td></tr>
+<tr><td>3  Evaluation</td><td>“Which option best fits my needs?”</td><td>Remove uncertainty</td></tr>
+<tr><td>4  Decision</td><td>“Is this the right choice to buy now?”</td><td>Reassure; remove final barriers</td></tr>
+<tr style="background:#F3DED3"><td>5  Purchase</td><td>“How quickly can I complete this?”</td><td>Speed and checkout isolation</td></tr>
+<tr><td>6  Post-purchase</td><td>“Was my order successful?”</td><td>Confirm, then track delivery</td></tr>
+<tr><td>7  Loyalty</td><td>“How do I manage this relationship?”</td><td>Personalise; make reordering easy</td></tr>
+</table>
+<aside>Awareness lasts seconds: the homepage should answer what the business offers, how to find things and why to trust it. Exploration: intuitive categories, responsive search, meaningful filters; narrow thousands of options into a manageable set. Evaluation: shift from helping users find products to helping them understand them; specs, imagery, authentic reviews, delivery, warranty, returns and comparison, ordered by user priorities. Decision: transparent pricing, shipping, secure payment messaging and clear returns; extra alternatives reopen resolved decisions. Purchase: simplified forms, progress indicators, guest checkout, inline validation, transparent pricing and security messaging. Post-purchase: confirmation, delivery estimate, tracking, support and next steps before suggesting more shopping. Loyalty: returning customers want reorders, tracking, account updates; personalisation beats broad promotions, and relationships are built through effortless interactions, not discounts alone.</aside>
+</section>
+</div><a class="num" href="#s20">20 / 36</a></div>
+<div class="frame" id="s21"><div class="stage"><section id="metrics" data-transition="fade" style="background:#ECE8DF;color:#16213A;font-family:'DM Sans', Arial, sans-serif;padding:128px;display:flex;flex-direction:column;gap:44px">
+<div style="display:flex;flex-direction:column;gap:20px">
+<p style="font-size:24px;font-weight:700;letter-spacing:3px;text-transform:uppercase;color:#B8461F">07 · Team tool · Measuring it</p>
+<h2 style="font-family:'Fraunces', Georgia, serif;font-size:72px;font-weight:400;line-height:1.1;color:#16213A">One metric to watch per stage</h2>
+</div>
+<table style="font-size:28px;color:#16213A">
+<tr><th style="width:22%">Stage</th><th style="width:42%">Watch</th><th style="width:36%">A healthy signal</th></tr>
+<tr><td>Awareness</td><td>Homepage bounce rate</td><td>Fewer quick exits</td></tr>
+<tr><td>Exploration</td><td>Zero-result and exit searches</td><td>Searches lead to products</td></tr>
+<tr><td>Evaluation</td><td>Product page → add to cart</td><td>More confident adds</td></tr>
+<tr><td>Decision</td><td>Cart → checkout start</td><td>Fewer stalled carts</td></tr>
+<tr style="background:#F3DED3"><td>Purchase</td><td>Checkout completion, form errors</td><td>Higher completion</td></tr>
+<tr><td>Post-purchase</td><td>“Where is my order?” contacts</td><td>Fewer anxious contacts</td></tr>
+<tr><td>Loyalty</td><td>Repeat purchase rate</td><td>More returning buyers</td></tr>
+</table>
+<aside>The paper argues UX is a measurable driver of business performance but does not prescribe metrics. These are suggested KPIs that map to each stage’s goal, chosen so the team can tell whether CAUX changes are working. Baseline them before redesigning, then compare after each change. Post-purchase support contacts tie to the paper’s point that a reassuring confirmation experience reduces anxiety and support requests.</aside>
+</section>
+</div><a class="num" href="#s21">21 / 36</a></div>
+<div class="frame" id="s22"><div class="stage"><section id="touchpoints" data-transition="fade" style="background:#F6F4EF;color:#16213A;font-family:'DM Sans', Arial, sans-serif;padding:128px;display:flex;flex-direction:column;gap:44px">
+<div style="display:flex;flex-direction:column;gap:20px">
+<p style="font-size:24px;font-weight:700;letter-spacing:3px;text-transform:uppercase;color:#B8461F">08 · Applying CAUX to every touchpoint</p>
+<h2 style="font-family:'Fraunces', Georgia, serif;font-size:72px;font-weight:400;line-height:1.1;color:#16213A">Every touchpoint has one job</h2>
+</div>
+<div style="display:grid;grid-template-columns:1fr 1fr 1fr 1fr;gap:24px">
+<div style="display:flex;flex-direction:column;gap:8px;background:#FDFCF9;border:1px solid #E2DDD2;border-radius:20px;padding:32px">
+<p style="font-size:24px;font-weight:700;color:#6B6F7A">HOMEPAGE</p>
+<h3 style="font-family:'Fraunces', Georgia, serif;font-size:44px;font-weight:400;color:#B8461F">Orient</h3>
+<p style="font-size:24px;line-height:1.45;color:#4A5263">Value, search, categories, trust signals.</p>
+</div>
+<div style="display:flex;flex-direction:column;gap:8px;background:#FDFCF9;border:1px solid #E2DDD2;border-radius:20px;padding:32px">
+<p style="font-size:24px;font-weight:700;color:#6B6F7A">NAVIGATION</p>
+<h3 style="font-family:'Fraunces', Georgia, serif;font-size:44px;font-weight:400;color:#B8461F">Predict</h3>
+<p style="font-size:24px;line-height:1.45;color:#4A5263">Labels match mental models, not org charts.</p>
+</div>
+<div style="display:flex;flex-direction:column;gap:8px;background:#FDFCF9;border:1px solid #E2DDD2;border-radius:20px;padding:32px">
+<p style="font-size:24px;font-weight:700;color:#6B6F7A">SEARCH</p>
+<h3 style="font-family:'Fraunces', Georgia, serif;font-size:44px;font-weight:400;color:#B8461F">Guide</h3>
+<p style="font-size:24px;line-height:1.45;color:#4A5263">Handles typos and synonyms; no dead ends.</p>
+</div>
+<div style="display:flex;flex-direction:column;gap:8px;background:#FDFCF9;border:1px solid #E2DDD2;border-radius:20px;padding:32px">
+<p style="font-size:24px;font-weight:700;color:#6B6F7A">PRODUCT LISTING</p>
+<h3 style="font-family:'Fraunces', Georgia, serif;font-size:44px;font-weight:400;color:#B8461F">Compare</h3>
+<p style="font-size:24px;line-height:1.45;color:#4A5263">Uniform cards; filters refine in place.</p>
+</div>
+<div style="display:flex;flex-direction:column;gap:8px;background:#FDFCF9;border:1px solid #E2DDD2;border-radius:20px;padding:32px">
+<p style="font-size:24px;font-weight:700;color:#6B6F7A">PRODUCT DETAIL</p>
+<h3 style="font-family:'Fraunces', Georgia, serif;font-size:44px;font-weight:400;color:#B8461F">Reassure</h3>
+<p style="font-size:24px;line-height:1.45;color:#4A5263">Practical info before marketing content.</p>
+</div>
+<div style="display:flex;flex-direction:column;gap:8px;background:#FDFCF9;border:1px solid #E2DDD2;border-radius:20px;padding:32px">
+<p style="font-size:24px;font-weight:700;color:#6B6F7A">CART</p>
+<h3 style="font-family:'Fraunces', Georgia, serif;font-size:44px;font-weight:400;color:#B8461F">Commit</h3>
+<p style="font-size:24px;line-height:1.45;color:#4A5263">Cross-sell never outshines the checkout button.</p>
+</div>
+<div style="display:flex;flex-direction:column;gap:8px;background:#16213A;border-radius:20px;padding:32px">
+<p style="font-size:24px;font-weight:700;color:#BFC8D9">CHECKOUT</p>
+<h3 style="font-family:'Fraunces', Georgia, serif;font-size:44px;font-weight:400;color:#F0A07C">Complete</h3>
+<p style="font-size:24px;line-height:1.45;color:#F6F4EF">Only what finishes the purchase.</p>
+</div>
+<div style="display:flex;flex-direction:column;gap:8px;background:#FDFCF9;border:1px solid #E2DDD2;border-radius:20px;padding:32px">
+<p style="font-size:24px;font-weight:700;color:#6B6F7A">POST-PURCHASE</p>
+<h3 style="font-family:'Fraunces', Georgia, serif;font-size:44px;font-weight:400;color:#B8461F">Confirm</h3>
+<p style="font-size:24px;line-height:1.45;color:#4A5263">Reassurance first, engagement later.</p>
+</div>
+</div>
+<aside>Homepage: often treated as prime marketing space where departments compete; for users it is about orientation. Navigation: customers think in products and problems, not departments; good navigation is barely noticed. Search: search users have stronger purchase intent; search should recognise synonyms, suggest, remember past searches and recover gracefully, acting as a guide rather than a filter. Listing pages: consistent cards with only what initial comparison needs; avoid excess badges and competing CTAs. Product detail: the deciding moment; prioritise confidence over persuasion, eliminate uncertainty. Cart: reinforce commitment with summaries, transparent pricing, shipping estimates, coupons and quantity controls. Checkout: remove every obstacle between intention and completion. Post-purchase: confirmation, order details, delivery dates and tracking come before recommendations, referrals or loyalty offers.</aside>
+</section>
+</div><a class="num" href="#s22">22 / 36</a></div>
+<div class="frame" id="s23"><div class="stage"><section id="essentials" data-transition="fade" style="background:#F6F4EF;color:#16213A;font-family:'DM Sans', Arial, sans-serif;padding:128px;display:flex;flex-direction:column;gap:56px">
+<div style="display:flex;flex-direction:column;gap:20px">
+<p style="font-size:24px;font-weight:700;letter-spacing:3px;text-transform:uppercase;color:#B8461F">08 · Page-level priorities</p>
+<h2 style="font-family:'Fraunces', Georgia, serif;font-size:72px;font-weight:400;line-height:1.1;color:#16213A">What each key page should lead with</h2>
+</div>
+<div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:32px">
+<div style="display:flex;flex-direction:column;gap:14px;background:#FDFCF9;border:1px solid #E2DDD2;border-radius:20px;padding:40px">
+<h3 style="font-size:32px;font-weight:700;padding:0 0 8px 0">Homepage</h3>
+<p style="font-size:28px;color:#4A5263">✓  Clear value proposition</p>
+<p style="font-size:28px;color:#4A5263">✓  Prominent search</p>
+<p style="font-size:28px;color:#4A5263">✓  Primary categories</p>
+<p style="font-size:28px;color:#4A5263">✓  A few featured collections</p>
+<p style="font-size:28px;color:#4A5263">✓  Delivery, returns, secure payment</p>
+</div>
+<div style="display:flex;flex-direction:column;gap:14px;background:#FDFCF9;border:1px solid #E2DDD2;border-radius:20px;padding:40px">
+<h3 style="font-size:32px;font-weight:700;padding:0 0 8px 0">Product card</h3>
+<p style="font-size:28px;color:#4A5263">✓  Image</p>
+<p style="font-size:28px;color:#4A5263">✓  Name</p>
+<p style="font-size:28px;color:#4A5263">✓  Price</p>
+<p style="font-size:28px;color:#4A5263">✓  Rating</p>
+<p style="font-size:28px;color:#4A5263">✓  Availability</p>
+<p style="font-size:28px;color:#4A5263">✓  Delivery estimate</p>
+</div>
+<div style="display:flex;flex-direction:column;gap:14px;background:#FDFCF9;border:1px solid #E2DDD2;border-radius:20px;padding:40px">
+<h3 style="font-size:32px;font-weight:700;padding:0 0 8px 0">Product detail page</h3>
+<p style="font-size:28px;color:#4A5263">✓  High-quality images</p>
+<p style="font-size:28px;color:#4A5263">✓  Transparent pricing</p>
+<p style="font-size:28px;color:#4A5263">✓  Delivery information</p>
+<p style="font-size:28px;color:#4A5263">✓  Specifications</p>
+<p style="font-size:28px;color:#4A5263">✓  Reviews and FAQs</p>
+<p style="font-size:28px;color:#4A5263">✓  Return policy</p>
+</div>
+</div>
+<aside>Homepage: wishlists, loyalty promotions and big campaigns stay valuable but shouldn’t dominate the first impression. Product listing cards: only what initial evaluation needs; delivery estimate where relevant. Product detail page: present practical details in a logical order; storytelling is valuable but must not block the information users need. The goal of the product page is to eliminate uncertainty, not to impress.</aside>
+</section>
+</div><a class="num" href="#s23">23 / 36</a></div>
+<div class="frame" id="s24"><div class="stage"><section id="checkout" data-transition="fade" style="background:#ECE8DF;color:#16213A;font-family:'DM Sans', Arial, sans-serif;padding:128px;display:flex;flex-direction:column;gap:56px">
+<div style="display:flex;flex-direction:column;gap:20px">
+<p style="font-size:24px;font-weight:700;letter-spacing:3px;text-transform:uppercase;color:#B8461F">08 · Checkout: designing for completion</p>
+<h2 style="font-family:'Fraunces', Georgia, serif;font-size:72px;font-weight:400;line-height:1.1;color:#16213A">Checkout isolation in practice</h2>
+</div>
+<div style="display:grid;grid-template-columns:1fr 1.25fr;gap:40px">
+<div style="display:flex;flex-direction:column;gap:14px;background:#E2DDD2;border-radius:24px;padding:44px">
+<p style="font-size:24px;font-weight:700;letter-spacing:3px;text-transform:uppercase;color:#6B6F7A;padding:0 0 8px 0">Minimise or remove</p>
+<p style="font-size:28px;color:#4A5263;text-decoration:line-through">Global navigation</p>
+<p style="font-size:28px;color:#4A5263;text-decoration:line-through">Promotional banners</p>
+<p style="font-size:28px;color:#4A5263;text-decoration:line-through">Category links</p>
+<p style="font-size:28px;color:#4A5263;text-decoration:line-through">Unrelated recommendations</p>
+<p style="font-size:28px;color:#4A5263;text-decoration:line-through">Wishlist shortcuts</p>
+</div>
+<div style="display:flex;flex-direction:column;gap:14px;background:#16213A;border-radius:24px;padding:44px">
+<p style="font-size:24px;font-weight:700;letter-spacing:3px;text-transform:uppercase;color:#F0A07C;padding:0 0 8px 0">Keep and sharpen</p>
+<div style="display:grid;grid-template-columns:1fr 1fr;gap:14px 28px">
+<p style="font-size:28px;color:#F6F4EF">✓  Progress indicators</p>
+<p style="font-size:28px;color:#F6F4EF">✓  Concise forms</p>
+<p style="font-size:28px;color:#F6F4EF">✓  Guest checkout</p>
+<p style="font-size:28px;color:#F6F4EF">✓  Inline validation</p>
+<p style="font-size:28px;color:#F6F4EF">✓  Payment options</p>
+<p style="font-size:28px;color:#F6F4EF">✓  Clear order summary</p>
+<p style="font-size:28px;color:#F6F4EF">✓  Security messaging</p>
+<p style="font-size:28px;color:#F6F4EF">✓  Transparent pricing</p>
+</div>
+</div>
+</div>
+<p style="font-family:'Fraunces', Georgia, serif;font-size:44px;line-height:1.3;color:#16213A;border-left:6px solid #B8461F;padding:0 0 0 32px">Every extra field or click adds friction; every simplification keeps momentum.</p>
+<aside>By checkout, discovery has ended and the intent is singular: complete the purchase. The page should contain only what achieves that. Checkout isolation isn’t about restricting user freedom; it removes avoidable distractions from a task users have already chosen to complete. Checkout is not the place to encourage further exploration.</aside>
+</section>
+</div><a class="num" href="#s24">24 / 36</a></div>
+<div class="frame" id="s25"><div class="stage"><section id="before-after" data-transition="fade" style="background:#F6F4EF;color:#16213A;font-family:'DM Sans', Arial, sans-serif;padding:128px;display:flex;flex-direction:column;gap:44px">
+<div style="display:flex;flex-direction:column;gap:20px">
+<p style="font-size:24px;font-weight:700;letter-spacing:3px;text-transform:uppercase;color:#B8461F">08 · Before and after</p>
+<h2 style="font-family:'Fraunces', Georgia, serif;font-size:72px;font-weight:400;line-height:1.1;color:#16213A">Same checkout, two philosophies</h2>
+</div>
+<div style="display:grid;grid-template-columns:1fr 1fr;gap:48px">
+<div style="display:flex;flex-direction:column;gap:16px">
+<p style="font-size:24px;font-weight:700;letter-spacing:3px;text-transform:uppercase;color:#5E6371">Before · feature-centric</p>
+<div style="display:flex;flex-direction:column;gap:14px;background:#FDFCF9;border:1px solid #E2DDD2;border-radius:20px;padding:28px">
+<div style="display:flex;flex-direction:row;gap:10px;align-items:center">
+<div style="width:90px;height:28px;background:#16213A;border-radius:6px"></div>
+<div style="flex:1"></div>
+<div style="width:70px;height:16px;background:#D6CFC1;border-radius:4px"></div>
+<div style="width:70px;height:16px;background:#D6CFC1;border-radius:4px"></div>
+<div style="width:70px;height:16px;background:#D6CFC1;border-radius:4px"></div>
+<div style="width:70px;height:16px;background:#D6CFC1;border-radius:4px"></div>
+<div style="width:70px;height:16px;background:#D6CFC1;border-radius:4px"></div>
+</div>
+<p style="font-size:24px;font-weight:700;background:#F3DED3;color:#8F3415;border-radius:8px;padding:12px 16px">FLASH SALE · Shop more deals →</p>
+<div style="display:flex;flex-direction:row;gap:14px">
+<div style="flex:1;display:flex;flex-direction:column;gap:10px">
+<div style="height:36px;border:1px solid #D6CFC1;border-radius:6px"></div>
+<div style="height:36px;border:1px solid #D6CFC1;border-radius:6px"></div>
+<div style="height:36px;border:1px solid #D6CFC1;border-radius:6px"></div>
+</div>
+<div style="width:180px;background:#ECE8DF;border-radius:8px"></div>
+</div>
+<p style="font-size:24px;color:#5E6371">You may also like · Join rewards · Newsletter</p>
+<div style="display:flex;flex-direction:row;gap:10px">
+<div style="flex:1;height:64px;background:#ECE8DF;border-radius:6px"></div>
+<div style="flex:1;height:64px;background:#ECE8DF;border-radius:6px"></div>
+<div style="flex:1;height:64px;background:#ECE8DF;border-radius:6px"></div>
+<div style="flex:1;height:64px;background:#ECE8DF;border-radius:6px"></div>
+</div>
+</div>
+<p style="font-size:24px;line-height:1.4;color:#5E6371">Navigation, promotions and cross-sell all compete with “Pay”.</p>
+</div>
+<div style="display:flex;flex-direction:column;gap:16px">
+<p style="font-size:24px;font-weight:700;letter-spacing:3px;text-transform:uppercase;color:#B8461F">After · CAUX checkout isolation</p>
+<div style="display:flex;flex-direction:column;gap:14px;background:#FDFCF9;border:2px solid #16213A;border-radius:20px;padding:28px">
+<div style="display:flex;flex-direction:row;gap:10px;align-items:center">
+<div style="width:90px;height:28px;background:#16213A;border-radius:6px"></div>
+<div style="flex:1"></div>
+<p style="font-size:24px;color:#2E6B4F">Secure checkout</p>
+</div>
+<div style="display:flex;flex-direction:row;gap:10px">
+<p style="font-size:24px;font-weight:700;background:#16213A;color:#F6F4EF;border-radius:30px;padding:8px 18px">1 Address</p>
+<p style="font-size:24px;background:#ECE8DF;border-radius:30px;padding:8px 18px">2 Payment</p>
+<p style="font-size:24px;background:#ECE8DF;border-radius:30px;padding:8px 18px">3 Review</p>
+</div>
+<div style="display:flex;flex-direction:row;gap:14px">
+<div style="flex:1;display:flex;flex-direction:column;gap:10px">
+<div style="height:36px;border:1px solid #D6CFC1;border-radius:6px"></div>
+<div style="height:36px;border:1px solid #D6CFC1;border-radius:6px"></div>
+</div>
+<div style="width:180px;display:flex;flex-direction:column;justify-content:center;background:#ECE8DF;border-radius:8px;padding:10px">
+<p style="font-size:24px;color:#4A5263">Total ₹2,499</p>
+</div>
+</div>
+<p style="font-size:28px;font-weight:700;text-align:center;background:#B8461F;color:#FBF4EE;border-radius:12px;padding:18px">Place order</p>
+</div>
+<p style="font-size:24px;line-height:1.4;color:#5E6371">Progress, few fields, clear total, one action.</p>
+</div>
+</div>
+<aside>An illustrative wireframe of checkout isolation. Before: global navigation, a flash-sale banner pushing more shopping, long forms, and recommendations, rewards and newsletter prompts all compete with the payment action. After: logo and security message only, a clear progress indicator, fewer fields, a transparent order summary and one primary action. The amount is a placeholder.</aside>
+</section>
+</div><a class="num" href="#s25">25 / 36</a></div>
+<div class="frame" id="s26"><div class="stage"><section id="benchmarks" data-transition="fade" style="background:#16213A;color:#F6F4EF;font-family:'DM Sans', Arial, sans-serif;padding:128px 128px 160px;display:flex;flex-direction:column;gap:44px">
+<div style="display:flex;flex-direction:column;gap:20px">
+<p style="font-size:24px;font-weight:700;letter-spacing:3px;text-transform:uppercase;color:#F0A07C">08 · Why it matters · Industry benchmarks</p>
+<h2 style="font-family:'Fraunces', Georgia, serif;font-size:72px;font-weight:400;line-height:1.1;color:#F6F4EF">The cost of checkout friction</h2>
+</div>
+<div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:24px">
+<div style="display:flex;flex-direction:column;gap:8px;background:#22304F;border-radius:20px;padding:32px">
+<p style="font-family:'Fraunces', Georgia, serif;font-size:72px;line-height:1.1;color:#F0A07C">70%</p>
+<p style="font-size:28px;line-height:1.35;color:#F6F4EF">of carts are abandoned before purchase</p>
+<p style="font-size:24px;color:#BFC8D9">→ Decision momentum</p>
+</div>
+<div style="display:flex;flex-direction:column;gap:8px;background:#22304F;border-radius:20px;padding:32px">
+<p style="font-family:'Fraunces', Georgia, serif;font-size:72px;line-height:1.1;color:#F0A07C">39%</p>
+<p style="font-size:28px;line-height:1.35;color:#F6F4EF">abandon over extra costs at checkout</p>
+<p style="font-size:24px;color:#BFC8D9">→ Transparent pricing early</p>
+</div>
+<div style="display:flex;flex-direction:column;gap:8px;background:#22304F;border-radius:20px;padding:32px">
+<p style="font-family:'Fraunces', Georgia, serif;font-size:72px;line-height:1.1;color:#F0A07C">21%</p>
+<p style="font-size:28px;line-height:1.35;color:#F6F4EF">abandon because delivery is too slow</p>
+<p style="font-size:24px;color:#BFC8D9">→ Show delivery dates upfront</p>
+</div>
+<div style="display:flex;flex-direction:column;gap:8px;background:#22304F;border-radius:20px;padding:32px">
+<p style="font-family:'Fraunces', Georgia, serif;font-size:72px;line-height:1.1;color:#F0A07C">1 in 5</p>
+<p style="font-size:28px;line-height:1.35;color:#F6F4EF">leave when forced to create an account</p>
+<p style="font-size:24px;color:#BFC8D9">→ Offer guest checkout</p>
+</div>
+<div style="display:flex;flex-direction:column;gap:8px;background:#22304F;border-radius:20px;padding:32px">
+<p style="font-family:'Fraunces', Georgia, serif;font-size:72px;line-height:1.1;color:#F0A07C">18%</p>
+<p style="font-size:28px;line-height:1.35;color:#F6F4EF">quit a checkout that is too long or complex</p>
+<p style="font-size:24px;color:#BFC8D9">→ Checkout isolation</p>
+</div>
+<div style="display:flex;flex-direction:column;gap:8px;background:#B8461F;border-radius:20px;padding:32px">
+<p style="font-family:'Fraunces', Georgia, serif;font-size:72px;line-height:1.1;color:#FBF4EE">35%</p>
+<p style="font-size:28px;line-height:1.35;color:#FBF4EE">possible conversion lift from better checkout design</p>
+</div>
+</div>
+<p style="position:absolute;left:128px;bottom:64px;width:1664px;font-size:24px;color:#BFC8D9">Source: Baymard Institute, checkout UX research (2025 benchmark). Global data, not India-specific.</p>
+<aside>Sources: Baymard Institute, “Checkout UX 2025: 10 Pitfalls and Best Practices” (average 70% abandonment; up to 35% conversion increase for an average large e-commerce site from checkout design changes; 18% of US shoppers abandoned because they didn’t want to create an account) and Baymard, “How to Reduce Cart Abandonment” (39% extra costs, 21% slow delivery, 18% too long or complicated checkout, 19% required account creation). These are global, largely US survey figures; they show the direction and scale of the problem, but measure our own funnel before quoting numbers for our platform.</aside>
+</section>
+</div><a class="num" href="#s26">26 / 36</a></div>
+<div class="frame" id="s27"><div class="stage"><section id="micro" data-transition="fade" style="background:#F6F4EF;color:#16213A;font-family:'DM Sans', Arial, sans-serif;padding:128px;display:flex;flex-direction:column;gap:56px">
+<div style="display:flex;flex-direction:column;gap:20px">
+<p style="font-size:24px;font-weight:700;letter-spacing:3px;text-transform:uppercase;color:#B8461F">08 · Small decisions, significant outcomes</p>
+<h2 style="font-family:'Fraunces', Georgia, serif;font-size:72px;font-weight:400;line-height:1.1;color:#16213A">Hundreds of micro-decisions add up</h2>
+</div>
+<div style="display:grid;grid-template-columns:1.2fr 1fr;gap:64px;align-items:center">
+<div style="display:flex;flex-direction:column;gap:0px">
+<p style="font-size:28px;color:#16213A;border-top:1px solid #D6CFC1;padding:16px 0">Clearer button labels instead of generic ones</p>
+<p style="font-size:28px;color:#16213A;border-top:1px solid #D6CFC1;padding:16px 0">Delivery info shown before users search for it</p>
+<p style="font-size:28px;color:#16213A;border-top:1px solid #D6CFC1;padding:16px 0">Previously applied filters remembered</p>
+<p style="font-size:28px;color:#16213A;border-top:1px solid #D6CFC1;padding:16px 0">Fewer required form fields</p>
+<p style="font-size:28px;color:#16213A;border-top:1px solid #D6CFC1;padding:16px 0">Error messages in plain language</p>
+<p style="font-size:28px;color:#16213A;border-top:1px solid #D6CFC1;padding:16px 0">Navigation hidden during checkout</p>
+<p style="font-size:28px;color:#16213A;border-top:1px solid #D6CFC1;border-bottom:1px solid #D6CFC1;padding:16px 0">Relevant info before promotional content</p>
+</div>
+<div style="display:grid;grid-template-columns:1fr 1fr;gap:20px">
+<div style="display:flex;flex-direction:column;gap:8px;background:#16213A;border-radius:20px;padding:32px">
+<x-icon name="Activity" style="color:#F0A07C;width:40px;height:40px"></x-icon>
+<p style="font-family:'Fraunces', Georgia, serif;font-size:32px;line-height:1.25;color:#F6F4EF">Higher conversion</p>
+</div>
+<div style="display:flex;flex-direction:column;gap:8px;background:#16213A;border-radius:20px;padding:32px">
+<x-icon name="Chart" style="color:#F0A07C;width:40px;height:40px"></x-icon>
+<p style="font-family:'Fraunces', Georgia, serif;font-size:32px;line-height:1.25;color:#F6F4EF">Lower cart abandonment</p>
+</div>
+<div style="display:flex;flex-direction:column;gap:8px;background:#16213A;border-radius:20px;padding:32px">
+<x-icon name="ThumbsUp" style="color:#F0A07C;width:40px;height:40px"></x-icon>
+<p style="font-family:'Fraunces', Georgia, serif;font-size:32px;line-height:1.25;color:#F6F4EF">Higher satisfaction</p>
+</div>
+<div style="display:flex;flex-direction:column;gap:8px;background:#16213A;border-radius:20px;padding:32px">
+<x-icon name="Star" style="color:#F0A07C;width:40px;height:40px"></x-icon>
+<p style="font-family:'Fraunces', Georgia, serif;font-size:32px;line-height:1.25;color:#F6F4EF">Stronger loyalty</p>
+</div>
+</div>
+</div>
+<aside>Effective UX is rarely one major innovation. Individually these decisions seem insignificant; collectively they decide whether an experience feels intuitive or frustrating. The difference between an average and an exceptional platform is usually consistent execution of small details. As refinements accumulate, they reduce friction, strengthen trust and raise goal completion, which shows up as better conversion, retention, satisfaction and loyalty. Exceptional e-commerce is built through intentional prioritisation, not feature accumulation.</aside>
+</section>
+</div><a class="num" href="#s27">27 / 36</a></div>
+<div class="frame" id="s28"><div class="stage"><section id="india-timeline" data-transition="fade" style="background:#F6F4EF;color:#16213A;font-family:'DM Sans', Arial, sans-serif;padding:128px;display:flex;flex-direction:column;gap:40px">
+<div style="display:flex;flex-direction:column;gap:20px">
+<p style="font-size:24px;font-weight:700;letter-spacing:3px;text-transform:uppercase;color:#B8461F">09 · Regulation in India</p>
+<h2 style="font-family:'Fraunces', Georgia, serif;font-size:72px;font-weight:400;line-height:1.1;color:#16213A">UX is now a compliance topic</h2>
+</div>
+<div style="display:flex;flex-direction:column;gap:0px">
+<div style="display:grid;grid-template-columns:200px 1fr 170px 200px;gap:24px;align-items:center;border-top:1px solid #D6CFC1;padding:10px 0"><p style="font-family:'Fraunces', Georgia, serif;font-size:28px;color:#B8461F">Nov 2023</p><p style="font-size:28px">CCPA Dark Patterns Guidelines name 13 banned patterns</p><p style="font-size:24px;font-weight:700;color:#2E6B4F">In force</p><p style="font-size:24px;font-weight:600;text-align:center;border:2px solid #16213A;border-radius:40px;padding:6px 14px"><a href="https://en.vikaspedia.in/viewcontent/social-welfare/social-awareness/consumer-education/the-guidelines-for-prevention-and-regulation-of-dark-patterns-2023?lgn=en">Gov page ↗</a></p></div>
+<div style="display:grid;grid-template-columns:200px 1fr 170px 200px;gap:24px;align-items:center;border-top:1px solid #D6CFC1;padding:10px 0"><p style="font-family:'Fraunces', Georgia, serif;font-size:28px;color:#B8461F">Jun 2025</p><p style="font-size:28px">CCPA advisory: platforms must self-audit for dark patterns</p><p style="font-size:24px;font-weight:700;color:#2E6B4F">In force</p><p style="font-size:24px;font-weight:600;text-align:center;border:2px solid #16213A;border-radius:40px;padding:6px 14px"><a href="https://www.azbpartners.com/bank/central-consumer-protection-authority-issues-advisory-to-e-commerce-platforms-for-self-audit-to-detect-dark-patterns-on-their-platforms/">Web page ↗</a></p></div>
+<div style="display:grid;grid-template-columns:200px 1fr 170px 200px;gap:24px;align-items:center;border-top:1px solid #D6CFC1;padding:10px 0"><p style="font-family:'Fraunces', Georgia, serif;font-size:28px;color:#B8461F">Nov 2025</p><p style="font-size:28px">DPDP Rules notified; obligations phase in</p><p style="font-size:24px;font-weight:700;color:#2E6B4F">Phasing in</p><p style="font-size:24px;font-weight:600;text-align:center;border:2px solid #16213A;border-radius:40px;padding:6px 14px"><a href="https://www.ey.com/content/dam/ey-unified-site/ey-com/en-in/pdf/2025/11/ey-india-dpdp-act-2023-and-rules-2025-pov.pdf">PDF ↗</a></p></div>
+<div style="display:grid;grid-template-columns:200px 1fr 170px 200px;gap:24px;align-items:center;border-top:1px solid #D6CFC1;padding:10px 0"><p style="font-family:'Fraunces', Georgia, serif;font-size:28px;color:#B8461F">Sep 2026</p><p style="font-size:28px">E-Commerce Rules amended: pricing, search, disclosures</p><p style="font-size:24px;font-weight:700;color:#5E6371">Notified</p><p style="font-size:24px;font-weight:600;text-align:center;border:2px solid #16213A;border-radius:40px;padding:6px 14px"><a href="https://www.livelaw.in/pdf_upload/2026/09/15/press-release-press-information-bureau-700276.pdf">PIB PDF ↗</a></p></div>
+<div style="display:grid;grid-template-columns:200px 1fr 170px 200px;gap:24px;align-items:center;border-top:1px solid #D6CFC1;padding:10px 0"><p style="font-family:'Fraunces', Georgia, serif;font-size:28px;color:#B8461F">13 Nov 2026</p><p style="font-size:28px">DPDP consent manager framework goes live</p><p style="font-size:24px;font-weight:700;color:#B8461F">Upcoming</p><p style="font-size:24px;font-weight:600;text-align:center;border:2px solid #16213A;border-radius:40px;padding:6px 14px"><a href="https://startuptalky.com/dpdp-act-timeline-phases-2026-2027-explained/">Web page ↗</a></p></div>
+<div style="display:grid;grid-template-columns:200px 1fr 170px 200px;gap:24px;align-items:center;background:#F3DED3;border-top:1px solid #D6CFC1;padding:10px 0"><p style="font-family:'Fraunces', Georgia, serif;font-size:28px;color:#B8461F">1 Jan 2027</p><p style="font-size:28px;font-weight:700">E-Commerce amendments take effect</p><p style="font-size:24px;font-weight:700;color:#B8461F">Upcoming</p><p style="font-size:24px;font-weight:600;text-align:center;border:2px solid #16213A;border-radius:40px;padding:6px 14px"><a href="https://www.livelaw.in/consumer-cases/government-amends-e-commerce-rules-to-strengthen-consumer-protection-550184">Web page ↗</a></p></div>
+<div style="display:grid;grid-template-columns:200px 1fr 170px 200px;gap:24px;align-items:center;border-top:1px solid #D6CFC1;padding:10px 0"><p style="font-family:'Fraunces', Georgia, serif;font-size:28px;color:#B8461F">May 2027</p><p style="font-size:28px">DPDP notice, consent, breach and erasure duties apply</p><p style="font-size:24px;font-weight:700;color:#B8461F">Upcoming</p><p style="font-size:24px;font-weight:600;text-align:center;border:2px solid #16213A;border-radius:40px;padding:6px 14px"><a href="https://www.scconline.com/blog/post/2025/11/14/meity-notified-digital-personal-data-protection-rules-2025/">Web page ↗</a></p></div>
+<div style="display:grid;grid-template-columns:200px 1fr 170px 200px;gap:24px;align-items:center;border-top:1px solid #D6CFC1;border-bottom:1px solid #D6CFC1;padding:10px 0"><p style="font-family:'Fraunces', Georgia, serif;font-size:28px;color:#B8461F">1 Jul 2027</p><p style="font-size:28px">Searchable country-of-origin filter required</p><p style="font-size:24px;font-weight:700;color:#B8461F">Upcoming</p><p style="font-size:24px;font-weight:600;text-align:center;border:2px solid #16213A;border-radius:40px;padding:6px 14px"><a href="https://foxmandal.in/news/inside-indias-new-amendments-to-e-commerce-rules/">Web page ↗</a></p></div>
+</div>
+<aside>Each button opens the source for that row. Gov page: Vikaspedia (Government of India portal) text of the 2023 Dark Patterns Guidelines. Jun 2025: AZB &amp; Partners summary of the CCPA self-audit advisory. Nov 2025: EY point of view on the DPDP Act and Rules (PDF). Sep 2026: Press Information Bureau release on the E-Commerce amendment (PDF, hosted by LiveLaw). 13 Nov 2026: StartupTalky DPDP timeline. 1 Jan 2027: LiveLaw report on the amendment. May 2027 (18 months after notification; sources differ between 13 and 14 May): SCC Online on the DPDP Rules notification. 1 Jul 2027: Fox Mandal analysis covering the country-of-origin filter under the Legal Metrology (Packaged Commodities) Rules. Status as of October 2026; verify with legal counsel before acting.</aside>
+</section>
+</div><a class="num" href="#s28">28 / 36</a></div>
+<div class="frame" id="s29"><div class="stage"><section id="india-ux" data-transition="fade" style="background:#F6F4EF;color:#16213A;font-family:'DM Sans', Arial, sans-serif;padding:128px 128px 160px;display:flex;flex-direction:column;gap:32px">
+<div style="display:flex;flex-direction:column;gap:20px">
+<p style="font-size:24px;font-weight:700;letter-spacing:3px;text-transform:uppercase;color:#B8461F">09 · Regulation in India · E-Commerce Amendment Rules 2026</p>
+<h2 style="font-family:'Fraunces', Georgia, serif;font-size:72px;font-weight:400;line-height:1.1;color:#16213A">E-commerce rules, touchpoint by touchpoint</h2>
+</div>
+<div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:20px">
+<div style="display:flex;flex-direction:column;gap:8px;background:#FDFCF9;border:1px solid #E2DDD2;border-radius:20px;padding:28px">
+<h3 style="font-size:32px;font-weight:700;line-height:1.2">Search and listings</h3>
+<p style="font-size:24px;line-height:1.4;color:#4A5263">No manipulated results. Sponsored items clearly labelled. Main ranking factors explained in plain language.</p>
+</div>
+<div style="display:flex;flex-direction:column;gap:8px;background:#FDFCF9;border:1px solid #E2DDD2;border-radius:20px;padding:28px">
+<h3 style="font-size:32px;font-weight:700;line-height:1.2">Prices and fees</h3>
+<p style="font-size:24px;line-height:1.4;color:#4A5263">Show the prior price (lowest in 30 days) beside any discount. No bundled fees for unrelated services.</p>
+</div>
+<div style="display:flex;flex-direction:column;gap:8px;background:#FDFCF9;border:1px solid #E2DDD2;border-radius:20px;padding:28px">
+<h3 style="font-size:32px;font-weight:700;line-height:1.2">Product pages</h3>
+<p style="font-size:24px;line-height:1.4;color:#4A5263">Best-before dates, returns, refunds, warranty, delivery and return-shipping costs, payment modes.</p>
+</div>
+<div style="display:flex;flex-direction:column;gap:8px;background:#FDFCF9;border:1px solid #E2DDD2;border-radius:20px;padding:28px">
+<h3 style="font-size:32px;font-weight:700;line-height:1.2">Seller and origin</h3>
+<p style="font-size:24px;line-height:1.4;color:#4A5263">Seller ID (e.g. GSTIN), website and email; importer and country of origin. Seller name as large as ours on invoices.</p>
+</div>
+<div style="display:flex;flex-direction:column;gap:8px;background:#FDFCF9;border:1px solid #E2DDD2;border-radius:20px;padding:28px">
+<h3 style="font-size:32px;font-weight:700;line-height:1.2">Customer data</h3>
+<p style="font-size:24px;line-height:1.4;color:#4A5263">Express, affirmative consent before using customer data to promote own-brand or related sellers.</p>
+</div>
+<div style="display:flex;flex-direction:column;gap:8px;background:#16213A;border-radius:20px;padding:28px">
+<h3 style="font-size:32px;font-weight:700;line-height:1.2;color:#F0A07C">Trust and grievances</h3>
+<p style="font-size:24px;line-height:1.4;color:#F6F4EF">Yearly dark-pattern audit, certificate on display. Complaint copy to user; acknowledge in 48 h, resolve in a month; join NCH.</p>
+</div>
+</div>
+<p style="position:absolute;left:128px;bottom:64px;width:1664px;font-size:24px;color:#5E6371">In force from 1 Jan 2027. Country-of-origin filter from 1 Jul 2027. A design summary, not legal advice.</p>
+<aside>Consumer Protection (E-Commerce) Amendment Rules 2026, notified 9 September 2026, in force 1 January 2027 (not applicable to this year’s festive sales). Search: platforms may not manipulate search results or indexes in a way that misleads users or reduces relevance; sponsored listings need clear, prominent disclosure; marketplaces must explain their main ranking parameters and their relative importance in plain language. Prices: when a price reduction is announced, show the reduced price and the prior price, defined as the lowest price in the preceding 30 days. Fees: marketplaces may not collect bundled fees for services unrelated to the platform; loyalty and membership programmes are exempt. Product and seller disclosures: best-before or use-before dates; return, refund, exchange, warranty and guarantee terms; delivery, shipping and return-shipping costs; accepted payment modes; seller government IDs such as GSTIN or MSME registration; seller website and email where available; importer details and the full country-of-origin name for imported goods. Seller name on the invoice in the same font size as the platform name. Customer data: marketplaces need express and affirmative consent before using consumer information for specified purposes, such as promoting related-party or same-brand sellers. Trust: comply with the 2023 Dark Patterns Guidelines, self-audit every year and display the certificate prominently. Grievances: give complainants a copy of the complaint as recorded by the grievance officer; the 48-hour acknowledgement and one-month redressal timelines remain; join the National Consumer Helpline (NCH) convergence process. The searchable country-of-origin filter comes from the Legal Metrology (Packaged Commodities) Rules and applies from 1 July 2027.</aside>
+</section>
+</div><a class="num" href="#s29">29 / 36</a></div>
+<div class="frame" id="s30"><div class="stage"><section id="india-dpdp" data-transition="fade" style="background:#F6F4EF;color:#16213A;font-family:'DM Sans', Arial, sans-serif;padding:128px 128px 160px;display:flex;flex-direction:column;gap:32px">
+<div style="display:flex;flex-direction:column;gap:20px">
+<p style="font-size:24px;font-weight:700;letter-spacing:3px;text-transform:uppercase;color:#B8461F">09 · Regulation in India · DPDP Act 2023 and Rules 2025</p>
+<h2 style="font-family:'Fraunces', Georgia, serif;font-size:72px;font-weight:400;line-height:1.1;color:#16213A">Data protection, built into our flows</h2>
+</div>
+<div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:20px">
+<div style="display:flex;flex-direction:column;gap:8px;background:#FDFCF9;border:1px solid #E2DDD2;border-radius:20px;padding:28px">
+<h3 style="font-size:32px;font-weight:700;line-height:1.2">Privacy notice</h3>
+<p style="font-size:24px;line-height:1.4;color:#4A5263">Standalone and plain: what data, for what purpose, how to withdraw, use rights or complain.</p>
+</div>
+<div style="display:flex;flex-direction:column;gap:8px;background:#FDFCF9;border:1px solid #E2DDD2;border-radius:20px;padding:28px">
+<h3 style="font-size:32px;font-weight:700;line-height:1.2">Consent</h3>
+<p style="font-size:24px;line-height:1.4;color:#4A5263">Specific and given by clear action, so no pre-ticked boxes. Withdrawing as easy as giving.</p>
+</div>
+<div style="display:flex;flex-direction:column;gap:8px;background:#FDFCF9;border:1px solid #E2DDD2;border-radius:20px;padding:28px">
+<h3 style="font-size:32px;font-weight:700;line-height:1.2">Under-18s</h3>
+<p style="font-size:24px;line-height:1.4;color:#4A5263">Verifiable parental consent, with the parent’s age checked. No tracking or targeted ads.</p>
+</div>
+<div style="display:flex;flex-direction:column;gap:8px;background:#FDFCF9;border:1px solid #E2DDD2;border-radius:20px;padding:28px">
+<h3 style="font-size:32px;font-weight:700;line-height:1.2">Erasure</h3>
+<p style="font-size:24px;line-height:1.4;color:#4A5263">Delete data once its purpose is served; warn users 48 hours before. Keep logs for a year.</p>
+</div>
+<div style="display:flex;flex-direction:column;gap:8px;background:#FDFCF9;border:1px solid #E2DDD2;border-radius:20px;padding:28px">
+<h3 style="font-size:32px;font-weight:700;line-height:1.2">Breaches</h3>
+<p style="font-size:24px;line-height:1.4;color:#4A5263">Tell affected users promptly; detailed report to the Data Protection Board within 72 hours.</p>
+</div>
+<div style="display:flex;flex-direction:column;gap:8px;background:#16213A;border-radius:20px;padding:28px">
+<h3 style="font-size:32px;font-weight:700;line-height:1.2;color:#F0A07C">Rights and grievances</h3>
+<p style="font-size:24px;line-height:1.4;color:#F6F4EF">Publish a contact person; answer grievances within 90 days. Penalties up to ₹250 crore.</p>
+</div>
+</div>
+<p style="position:absolute;left:128px;bottom:64px;width:1664px;font-size:24px;color:#5E6371">Consent managers from 13 Nov 2026; most obligations from May 2027. A design summary, not legal advice.</p>
+<aside>Digital Personal Data Protection Rules 2025, notified 13 November 2025 under the DPDP Act 2023. Phasing: Rules 1, 2 and 17–21 in force from notification; consent managers (Rule 4) from 13 November 2026; notice, security safeguards, breach handling, retention and children’s data (Rules 3, 5–16, 22–23) 18 months after notification, in May 2027 (sources differ between 13 and 14 May; confirm with legal). Notice (Rule 3): clear, independent and accessible; lists the personal data and specific purposes; explains how to withdraw consent, exercise rights and complain. Consent (Act s.6): free, specific, informed, unconditional and unambiguous, given by clear affirmative action; withdrawal must be comparable in ease to giving consent. Children (Act s.9, Rule 10): verifiable parental consent, confirming the parent is an adult using reliable identity or age details or a virtual token such as DigiLocker; no tracking, behavioural monitoring or targeted advertising directed at children. Erasure: delete data once the specified purpose is no longer served unless law requires retention; notify the user 48 hours before erasure; retain personal data and logs for at least one year. Breaches: inform affected users promptly with details and mitigation steps; give the Data Protection Board an initial intimation and a detailed report within 72 hours. Rights (Rule 9 onwards): publish the DPO or contact person’s details; give clear instructions for exercising rights; respond to grievances within 90 days. Security safeguards include encryption, masking or tokenisation, access controls, logging and backups. Penalty for failing to maintain reasonable security safeguards: up to ₹250 crore. Note: “reject as easy as accept” on cookie banners is an industry reading of these rules, not their wording.</aside>
+</section>
+</div><a class="num" href="#s30">30 / 36</a></div>
+<div class="frame" id="s31"><div class="stage"><section id="dark-patterns" data-transition="fade" style="background:#ECE8DF;color:#16213A;font-family:'DM Sans', Arial, sans-serif;padding:128px;display:flex;flex-direction:column;gap:40px">
+<div style="display:flex;flex-direction:column;gap:20px">
+<p style="font-size:24px;font-weight:700;letter-spacing:3px;text-transform:uppercase;color:#B8461F">09 · Regulation in India · CCPA Dark Patterns Guidelines, 2023</p>
+<h2 style="font-family:'Fraunces', Georgia, serif;font-size:72px;font-weight:400;line-height:1.1;color:#16213A">13 patterns we must never ship</h2>
+</div>
+<div style="display:grid;grid-template-columns:1fr 1fr 1fr 1fr 1fr;gap:18px">
+<div style="display:flex;flex-direction:column;gap:6px;background:#FDFCF9;border-radius:16px;padding:22px"><p style="font-size:28px;font-weight:700;line-height:1.2">False urgency</p><p style="font-size:24px;line-height:1.35;color:#4A5263">Fake timers, scarcity</p></div>
+<div style="display:flex;flex-direction:column;gap:6px;background:#FDFCF9;border-radius:16px;padding:22px"><p style="font-size:28px;font-weight:700;line-height:1.2">Basket sneaking</p><p style="font-size:24px;line-height:1.35;color:#4A5263">Items added unasked</p></div>
+<div style="display:flex;flex-direction:column;gap:6px;background:#FDFCF9;border-radius:16px;padding:22px"><p style="font-size:28px;font-weight:700;line-height:1.2">Confirm shaming</p><p style="font-size:24px;line-height:1.35;color:#4A5263">Guilt to say yes</p></div>
+<div style="display:flex;flex-direction:column;gap:6px;background:#FDFCF9;border-radius:16px;padding:22px"><p style="font-size:28px;font-weight:700;line-height:1.2">Forced action</p><p style="font-size:24px;line-height:1.35;color:#4A5263">Do X to get Y</p></div>
+<div style="display:flex;flex-direction:column;gap:6px;background:#FDFCF9;border-radius:16px;padding:22px"><p style="font-size:28px;font-weight:700;line-height:1.2">Subscription trap</p><p style="font-size:24px;line-height:1.35;color:#4A5263">Hard to cancel</p></div>
+<div style="display:flex;flex-direction:column;gap:6px;background:#FDFCF9;border-radius:16px;padding:22px"><p style="font-size:28px;font-weight:700;line-height:1.2">Interface interference</p><p style="font-size:24px;line-height:1.35;color:#4A5263">Design hides key info</p></div>
+<div style="display:flex;flex-direction:column;gap:6px;background:#FDFCF9;border-radius:16px;padding:22px"><p style="font-size:28px;font-weight:700;line-height:1.2">Bait and switch</p><p style="font-size:24px;line-height:1.35;color:#4A5263">Offer differs from ad</p></div>
+<div style="display:flex;flex-direction:column;gap:6px;background:#FDFCF9;border-radius:16px;padding:22px"><p style="font-size:28px;font-weight:700;line-height:1.2">Drip pricing</p><p style="font-size:24px;line-height:1.35;color:#4A5263">Costs revealed late</p></div>
+<div style="display:flex;flex-direction:column;gap:6px;background:#FDFCF9;border-radius:16px;padding:22px"><p style="font-size:28px;font-weight:700;line-height:1.2">Disguised ads</p><p style="font-size:24px;line-height:1.35;color:#4A5263">Ads posing as content</p></div>
+<div style="display:flex;flex-direction:column;gap:6px;background:#FDFCF9;border-radius:16px;padding:22px"><p style="font-size:28px;font-weight:700;line-height:1.2">Nagging</p><p style="font-size:24px;line-height:1.35;color:#4A5263">Repeated interruptions</p></div>
+<div style="display:flex;flex-direction:column;gap:6px;background:#FDFCF9;border-radius:16px;padding:22px"><p style="font-size:28px;font-weight:700;line-height:1.2">Trick question</p><p style="font-size:24px;line-height:1.35;color:#4A5263">Confusing wording</p></div>
+<div style="display:flex;flex-direction:column;gap:6px;background:#FDFCF9;border-radius:16px;padding:22px"><p style="font-size:28px;font-weight:700;line-height:1.2">SaaS billing</p><p style="font-size:24px;line-height:1.35;color:#4A5263">Silent recurring charges</p></div>
+<div style="display:flex;flex-direction:column;gap:6px;background:#FDFCF9;border-radius:16px;padding:22px"><p style="font-size:28px;font-weight:700;line-height:1.2">Rogue malware</p><p style="font-size:24px;line-height:1.35;color:#4A5263">Malicious links, apps</p></div>
+<div style="grid-column:span 2;display:flex;flex-direction:column;justify-content:center;gap:6px;background:#16213A;border-radius:16px;padding:22px 28px"><p style="font-size:28px;font-weight:700;line-height:1.3;color:#F6F4EF">CAUX already rules these out:</p><p style="font-size:24px;line-height:1.35;color:#F0A07C">Trust accumulation, transparent pricing, no distractions at checkout.</p></div>
+</div>
+<aside>The Central Consumer Protection Authority’s Guidelines for Prevention and Regulation of Dark Patterns, 2023 list 13 specified dark patterns: false urgency, basket sneaking, confirm shaming, forced action, subscription trap, interface interference, bait and switch, drip pricing, disguised advertisement, nagging, trick question, SaaS billing and rogue malware. From 1 January 2027 the amended E-Commerce Rules make compliance and an annual self-audit mandatory, with the certificate displayed prominently. Many of these patterns are exactly what CAUX argues against on UX grounds: nagging and interference raise cognitive load, drip pricing breaks trust, basket sneaking and false urgency undermine confident decisions.</aside>
+</section>
+</div><a class="num" href="#s31">31 / 36</a></div>
+<div class="frame" id="s32"><div class="stage"><section id="conclusion" data-transition="fade" style="background:#F6F4EF;color:#16213A;font-family:'DM Sans', Arial, sans-serif;padding:128px;display:flex;flex-direction:column;gap:56px">
+<div style="display:flex;flex-direction:column;gap:20px">
+<p style="font-size:24px;font-weight:700;letter-spacing:3px;text-transform:uppercase;color:#B8461F">10 · Conclusion</p>
+<h2 style="font-family:'Fraunces', Georgia, serif;font-size:72px;font-weight:400;line-height:1.1;color:#16213A">Four key findings</h2>
+</div>
+<div style="display:grid;grid-template-columns:1fr 1fr;gap:28px">
+<div style="display:flex;flex-direction:row;gap:28px;background:#FDFCF9;border:1px solid #E2DDD2;border-radius:20px;padding:36px">
+<p style="font-family:'Fraunces', Georgia, serif;font-size:44px;color:#B8461F">1</p>
+<div style="display:flex;flex-direction:column;gap:8px"><h3 style="font-size:32px;font-weight:700;line-height:1.2">Relevance is the real gap</h3><p style="font-size:28px;line-height:1.4;color:#4A5263">Platforms lack contextual relevance, not functionality.</p></div>
+</div>
+<div style="display:flex;flex-direction:row;gap:28px;background:#FDFCF9;border:1px solid #E2DDD2;border-radius:20px;padding:36px">
+<p style="font-family:'Fraunces', Georgia, serif;font-size:44px;color:#B8461F">2</p>
+<div style="display:flex;flex-direction:column;gap:8px"><h3 style="font-size:32px;font-weight:700;line-height:1.2">The journey is a flow of intent</h3><p style="font-size:28px;line-height:1.4;color:#4A5263">Each stage needs different information and priorities.</p></div>
+</div>
+<div style="display:flex;flex-direction:row;gap:28px;background:#FDFCF9;border:1px solid #E2DDD2;border-radius:20px;padding:36px">
+<p style="font-family:'Fraunces', Georgia, serif;font-size:44px;color:#B8461F">3</p>
+<div style="display:flex;flex-direction:column;gap:8px"><h3 style="font-size:32px;font-weight:700;line-height:1.2">Small details drive results</h3><p style="font-size:28px;line-height:1.4;color:#4A5263">Business gains come from accumulated micro-interactions.</p></div>
+</div>
+<div style="display:flex;flex-direction:row;gap:28px;background:#FDFCF9;border:1px solid #E2DDD2;border-radius:20px;padding:36px">
+<p style="font-family:'Fraunces', Georgia, serif;font-size:44px;color:#B8461F">4</p>
+<div style="display:flex;flex-direction:column;gap:8px"><h3 style="font-size:32px;font-weight:700;line-height:1.2">UX can’t be standardised</h3><p style="font-size:28px;line-height:1.4;color:#4A5263">Start from the business model and user intent.</p></div>
+</div>
+</div>
+<p style="font-size:28px;line-height:1.45;color:#4A5263">AI, conversational, immersive and predictive tools will change. Clarity, confidence and respect for attention will not.</p>
+<aside>As products become easy to replicate and pricing transparent, experience is often the deciding factor. Exposing every feature throughout the journey assumes visibility drives engagement, but it usually raises cognitive load and distracts. CAUX shifts focus from feature-centric to intent-centric design: relevance over quantity, clarity over complexity, guidance over distraction. A marketplace, a luxury brand, a D2C business and a B2B platform serve different audiences; what improves one can weaken another. Good design is contextual.</aside>
+</section>
+</div><a class="num" href="#s32">32 / 36</a></div>
+<div class="frame" id="s33"><div class="stage"><section id="our-product" data-transition="fade" style="background:#F6F4EF;color:#16213A;font-family:'DM Sans', Arial, sans-serif;padding:128px;display:flex;flex-direction:column;gap:48px">
+<div style="display:flex;flex-direction:column;gap:20px">
+<p style="font-size:24px;font-weight:700;letter-spacing:3px;text-transform:uppercase;color:#B8461F">11 · Team workshop</p>
+<h2 style="font-family:'Fraunces', Georgia, serif;font-size:72px;font-weight:400;line-height:1.1;color:#16213A">Where are we today?</h2>
+</div>
+<div style="display:grid;grid-template-columns:1fr 1fr;gap:28px">
+<div style="display:flex;flex-direction:column;gap:14px;background:#FDFCF9;border:1px solid #E2DDD2;border-radius:20px;padding:36px">
+<h3 style="font-size:32px;font-weight:700">Our business model</h3>
+<p style="font-size:28px;color:#5E6371">[Brand store / marketplace / multi-brand / D2C / luxury / B2B]</p>
+</div>
+<div style="display:flex;flex-direction:column;gap:14px;background:#FDFCF9;border:1px solid #E2DDD2;border-radius:20px;padding:36px">
+<h3 style="font-size:32px;font-weight:700">Biggest drop-off stage</h3>
+<p style="font-size:28px;color:#5E6371">[Stage] · [metric from our analytics]</p>
+</div>
+<div style="display:flex;flex-direction:column;gap:14px;background:#FDFCF9;border:1px solid #E2DDD2;border-radius:20px;padding:36px">
+<h3 style="font-size:32px;font-weight:700">Elements failing the test</h3>
+<p style="font-size:28px;color:#5E6371">[Top 3 from the page audit]</p>
+</div>
+<div style="display:flex;flex-direction:column;gap:14px;background:#16213A;border-radius:20px;padding:36px">
+<h3 style="font-size:32px;font-weight:700;color:#F0A07C">Three quick wins</h3>
+<p style="font-size:28px;color:#BFC8D9">[1] · [2] · [3]</p>
+</div>
+</div>
+<aside>A fill-in slide for the team session. Complete it after running the page audit and pulling the stage metrics. Start with the business model, since the paper’s point is that the right UX depends on it, then pick the stage with the worst drop-off and the elements that fail the decision test there.</aside>
+</section>
+</div><a class="num" href="#s33">33 / 36</a></div>
+<div class="frame" id="s34"><div class="stage"><section id="next-steps" data-transition="fade" style="background:#F6F4EF;color:#16213A;font-family:'DM Sans', Arial, sans-serif;padding:128px;display:flex;flex-direction:column;gap:48px">
+<div style="display:flex;flex-direction:column;gap:20px">
+<p style="font-size:24px;font-weight:700;letter-spacing:3px;text-transform:uppercase;color:#B8461F">11 · Next steps</p>
+<h2 style="font-family:'Fraunces', Georgia, serif;font-size:72px;font-weight:400;line-height:1.1;color:#16213A">From framework to roadmap</h2>
+</div>
+<div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:28px">
+<div style="display:flex;flex-direction:column;gap:14px;border-top:6px solid #16213A;padding:28px 0 0 0">
+<p style="font-size:24px;font-weight:700;letter-spacing:2px;color:#5E6371">NEXT 30 DAYS</p>
+<p style="font-size:28px;line-height:1.4">Audit checkout and product pages</p>
+<p style="font-size:28px;line-height:1.4">Baseline the seven stage metrics</p>
+<p style="font-size:28px;line-height:1.4">Agree the feature-visibility map</p>
+</div>
+<div style="display:flex;flex-direction:column;gap:14px;border-top:6px solid #B8461F;padding:28px 0 0 0">
+<p style="font-size:24px;font-weight:700;letter-spacing:2px;color:#B8461F">BEFORE 1 JAN 2027</p>
+<p style="font-size:28px;line-height:1.4">Dark-pattern self-audit and certificate</p>
+<p style="font-size:28px;line-height:1.4">30-day prior-price display</p>
+<p style="font-size:28px;line-height:1.4">Sponsored labels, seller and origin details</p>
+</div>
+<div style="display:flex;flex-direction:column;gap:14px;border-top:6px solid #C9C2B4;padding:28px 0 0 0">
+<p style="font-size:24px;font-weight:700;letter-spacing:2px;color:#5E6371">FOR THE PAPER</p>
+<p style="font-size:28px;line-height:1.4">Validate with A/B and usability tests</p>
+<p style="font-size:28px;line-height:1.4">Cite Nielsen, Norman, Sweller, Kahneman</p>
+<p style="font-size:28px;line-height:1.4">Add framework and journey diagrams</p>
+</div>
+</div>
+<p style="font-size:28px;line-height:1.4;color:#5E6371">Also before <b style="color:#16213A">May 2027</b>: DPDP-ready notices, consent, parental checks, erasure and breach flows.</p>
+<aside>Team actions combine the CAUX tools in this deck with the regulatory deadlines. The research column comes from the reviewer feedback on the manuscript: to suit international HCI and UX journals (Elsevier, Springer, ACM, IEEE, Taylor &amp; Francis), the paper needs empirical validation through usability tests, A/B tests or case studies; in-text citations to foundational work such as Nielsen, Norman, Card, Shneiderman, Sweller, Kahneman and Krug, with a formatted reference list; and figures for the CAUX framework, the intent-driven journey, the cognitive load model and page-level mappings.</aside>
+</section>
+</div><a class="num" href="#s34">34 / 36</a></div>
+<div class="frame" id="s35"><div class="stage"><section id="closing" data-transition="fade" style="background:#16213A;color:#F6F4EF;font-family:'DM Sans', Arial, sans-serif;padding:128px;display:flex;flex-direction:column;justify-content:center;gap:48px">
+<div style="position:absolute;left:0;top:0;width:24px;height:1080px;background:#E07A4F"></div>
+<h1 style="font-family:'Fraunces', Georgia, serif;font-size:120px;font-weight:400;line-height:1.05;color:#F6F4EF">Technology should adapt to people, <i style="color:#F0A07C">not the other way around.</i></h1>
+<p style="font-size:32px;line-height:1.45;color:#BFC8D9">The future belongs to platforms that understand <b style="color:#F6F4EF">when</b> each feature is needed and <b style="color:#F6F4EF">why</b> it matters.</p>
+<aside>Designing with context, intent and empathy is not only a better UX strategy; it is a sustainable business strategy. Aligning interface decisions with human behaviour rather than interface conventions creates shopping experiences that are more intuitive for users, more effective for businesses and more resilient in a competitive market.</aside>
+</section>
+</div><a class="num" href="#s35">35 / 36</a></div>
+<div class="frame" id="s36"><div class="stage"><section id="sources" data-transition="fade" style="background:#F6F4EF;color:#16213A;font-family:'DM Sans', Arial, sans-serif;padding:128px;display:flex;flex-direction:column;gap:48px">
+<div style="display:flex;flex-direction:column;gap:20px">
+<p style="font-size:24px;font-weight:700;letter-spacing:3px;text-transform:uppercase;color:#B8461F">References</p>
+<h2 style="font-family:'Fraunces', Georgia, serif;font-size:72px;font-weight:400;line-height:1.1;color:#16213A">Sources</h2>
+</div>
+<div style="display:grid;grid-template-columns:1fr 1.3fr 1fr;gap:48px">
+<div style="display:flex;flex-direction:column;gap:18px;border-top:6px solid #16213A;padding:24px 0 0 0">
+<p style="font-size:24px;font-weight:700;letter-spacing:2px;color:#5E6371">RESEARCH PAPER</p>
+<p style="font-size:24px;line-height:1.45">The Context-Aware UX Framework (CAUX): Designing E-Commerce for Intent. Manuscript.</p>
+<p style="font-size:24px;line-height:1.45;color:#5E6371">Reviewer feedback on the manuscript (next steps).</p>
+<p style="font-size:24px;line-height:1.45;color:#5E6371">Team tools (visibility map, ownership, audit, metrics, before and after) are derived from the paper.</p>
+</div>
+<div style="display:flex;flex-direction:column;gap:18px;border-top:6px solid #B8461F;padding:24px 0 0 0">
+<p style="font-size:24px;font-weight:700;letter-spacing:2px;color:#B8461F">REGULATION IN INDIA</p>
+<p style="font-size:24px;line-height:1.45">CCPA, Guidelines for Prevention and Regulation of Dark Patterns, 2023</p>
+<p style="font-size:24px;line-height:1.45"><a href="https://www.azbpartners.com/bank/central-consumer-protection-authority-issues-advisory-to-e-commerce-platforms-for-self-audit-to-detect-dark-patterns-on-their-platforms/">AZB &amp; Partners: CCPA self-audit advisory (Jun 2025)</a></p>
+<p style="font-size:24px;line-height:1.45"><a href="https://www.livelaw.in/consumer-cases/government-amends-e-commerce-rules-to-strengthen-consumer-protection-550184">LiveLaw: E-Commerce Rules amended (15 Sep 2026)</a></p>
+<p style="font-size:24px;line-height:1.45"><a href="https://foxmandal.in/news/inside-indias-new-amendments-to-e-commerce-rules/">Fox Mandal: Inside India’s new e-commerce amendments</a></p>
+<p style="font-size:24px;line-height:1.45"><a href="https://www.livelaw.in/pdf_upload/2026/09/15/press-release-press-information-bureau-700276.pdf">PIB press release: E-Commerce Amendment Rules 2026</a></p>
+<p style="font-size:24px;line-height:1.45"><a href="https://www.scconline.com/blog/post/2025/11/14/meity-notified-digital-personal-data-protection-rules-2025/">SCC Online: DPDP Rules 2025 notified</a></p>
+<p style="font-size:24px;line-height:1.45"><a href="https://startuptalky.com/dpdp-act-timeline-phases-2026-2027-explained/">StartupTalky: DPDP Act and Rules timeline</a></p>
+</div>
+<div style="display:flex;flex-direction:column;gap:18px;border-top:6px solid #C9C2B4;padding:24px 0 0 0">
+<p style="font-size:24px;font-weight:700;letter-spacing:2px;color:#5E6371">BENCHMARKS</p>
+<p style="font-size:24px;line-height:1.45"><a href="https://baymard.com/research-articles/current-state-of-checkout-ux">Baymard Institute: Checkout UX 2025</a></p>
+<p style="font-size:24px;line-height:1.45"><a href="https://baymard.com/blog/reduce-cart-abandonment">Baymard Institute: How to Reduce Cart Abandonment</a></p>
+<p style="font-size:24px;line-height:1.45;color:#5E6371">Global, mostly US survey data.</p>
+</div>
+</div>
+<p style="font-size:24px;color:#5E6371">Regulatory status as of October 2026. A design summary, not legal advice.</p>
+<aside>Full source list for the deck. The paper’s own content has no external citations yet; adding them is one of the reviewer recommendations on the next-steps slide.</aside>
+</section>
+</div><a class="num" href="#s36">36 / 36</a></div>
+</body>
+</html>
