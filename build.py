@@ -3,6 +3,7 @@
 Run:  python3 build.py
 """
 import json
+import re
 import pathlib
 
 ROOT = pathlib.Path(__file__).parent
@@ -17,6 +18,8 @@ fonts = "".join(
 slides = []
 for i, slide_id in enumerate(deck["order"], start=1):
     html = (ROOT / "deck" / "slides" / f"{slide_id}.html").read_text(encoding="utf-8")
+    # Uploaded images live in deck/assets/<id>.png in this repo
+    html = re.sub(r'src="/_blob/([0-9a-f]+)"', r'src="deck/assets/\1.png"', html)
     slides.append(
         f'<div class="frame" id="s{i}"><div class="stage">{html}</div>'
         f'<a class="num" href="#s{i}">{i} / {len(deck["order"])}</a></div>'
