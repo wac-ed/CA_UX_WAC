@@ -6,7 +6,7 @@ A 36-slide deck presenting the research paper *Designing for intent, not pages: 
 
 | Path | What it is |
 |---|---|
-| `index.html` | Full-screen presenter with page-turn animation. Open it in a browser. |
+| `index.html` | Full-screen presenter: slides peel away from the bottom-right corner as frosted glass. Open it in a browser. |
 | `deck/deck.json` | Deck index: title, slide order, sections and fonts |
 | `deck/slides/*.html` | One file per slide (1920 × 1080). Speaker notes are in each slide’s `<aside>`. |
 | `build.py` | Rebuilds `index.html` from the slide files: `python3 build.py` |
@@ -21,7 +21,7 @@ A 36-slide deck presenting the research paper *Designing for intent, not pages: 
 | Full screen | F, or the Full screen button |
 | Jump to a slide | Add `#12` to the URL |
 
-Controls and the cursor hide after a few seconds without mouse movement. If the viewer’s system asks for reduced motion, slides cross-fade instead of turning.
+Controls and the cursor hide after a few seconds without mouse movement. If the viewer’s system asks for reduced motion, slides cross-fade instead of peeling.
 
 ## Deck outline
 
