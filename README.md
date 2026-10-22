@@ -6,10 +6,22 @@ A 36-slide deck presenting the research paper *Designing for intent, not pages: 
 
 | Path | What it is |
 |---|---|
-| `index.html` | The whole deck on one page. Open it in a browser. |
+| `index.html` | Full-screen presenter with page-turn animation. Open it in a browser. |
 | `deck/deck.json` | Deck index: title, slide order, sections and fonts |
 | `deck/slides/*.html` | One file per slide (1920 × 1080). Speaker notes are in each slide’s `<aside>`. |
 | `build.py` | Rebuilds `index.html` from the slide files: `python3 build.py` |
+
+## Presenting with `index.html`
+
+| Action | Keys and gestures |
+|---|---|
+| Next slide | → ↓ Space Enter Page Down, click the right of the screen, or swipe left |
+| Previous slide | ← ↑ Page Up Backspace, click the left third, or swipe right |
+| First / last slide | Home / End |
+| Full screen | F, or the Full screen button |
+| Jump to a slide | Add `#12` to the URL |
+
+Controls and the cursor hide after a few seconds without mouse movement. If the viewer’s system asks for reduced motion, slides cross-fade instead of turning.
 
 ## Deck outline
 
@@ -23,5 +35,5 @@ A 36-slide deck presenting the research paper *Designing for intent, not pages: 
 
 ## Notes
 
-- The editable version lives as a Claude Slides artifact, which also exports to PowerPoint and PDF. This repository holds a snapshot of its source files; `index.html` is a simplified browser rendering, so icons appear as plain dots.
+- The editable version lives as a Claude Slides artifact, which also exports to PowerPoint and PDF. This repository holds a snapshot of its source files; `index.html` is a simplified browser rendering, so icons appear as plain dots and fonts need an internet connection.
 - Regulatory content reflects status as of October 2026 and is a design summary, not legal advice. Sources are on the final slide and in the speaker notes.
