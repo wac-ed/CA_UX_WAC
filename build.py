@@ -105,6 +105,7 @@ page = f"""<!doctype html>
 </div></div>
 <div id="bar"></div>
 <div id="hud">
+  <button id="home" class="glass" aria-label="Go to the first slide">&#8962; Home</button>
   <button id="prev" class="glass" aria-label="Previous slide">&#8592;</button>
   <span id="count" class="glass" aria-live="polite"></span>
   <button id="next" class="glass" aria-label="Next slide">&#8594;</button>
@@ -187,21 +188,22 @@ page = f"""<!doctype html>
       rgba(255,255,255,.95) ${{pct(f)}})`;
     // a thin bright rim along the fold
     edge.style.clipPath = poly(flapPts);
-    edge.style.background = `linear-gradient(135deg, transparent ${{pct(f - .006)}}, rgba(255,255,255,.9) ${{pct(f - .001)}}, transparent ${{pct(f)}})`;
+    edge.style.background = `linear-gradient(135deg, transparent ${{pct(f - .004)}}, rgba(255,255,255,.95) ${{pct(f - .0008)}}, transparent ${{pct(f)}})`;
+    edge.style.filter = 'drop-shadow(0 0 6px rgba(255,255,255,.6))';
   }}
 
   const ease = t => t < .5 ? 4 * t * t * t : 1 - Math.pow(-2 * t + 2, 3) / 2;
 
   function peel(top, under, from, to, done) {{
     top.style.zIndex = 2; under.style.zIndex = 1;
-    [shade, flapShadow, flap, edge].forEach(el => el.style.display = 'block');
+    edge.style.display = 'block';
     const t0 = performance.now();
     (function step(now) {{
       const t = Math.min(1, (now - t0) / DUR);
       frame(top, from + (to - from) * ease(t));
       if (t < 1) requestAnimationFrame(step);
       else {{
-        [shade, flapShadow, flap, edge].forEach(el => {{ el.style.display = 'none'; }});
+        edge.style.display = 'none';
         done();
       }}
     }})(t0);
@@ -252,6 +254,7 @@ page = f"""<!doctype html>
   }});
 
   // Buttons
+  document.getElementById('home').onclick = e => {{ e.stopPropagation(); go(0); }};
   document.getElementById('prev').onclick = e => {{ e.stopPropagation(); go(cur - 1); }};
   document.getElementById('next').onclick = e => {{ e.stopPropagation(); go(cur + 1); }};
   const fsBtn = document.getElementById('fs');

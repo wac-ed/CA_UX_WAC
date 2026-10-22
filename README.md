@@ -6,7 +6,7 @@ A 36-slide deck presenting the research paper *Designing for intent, not pages: 
 
 | Path | What it is |
 |---|---|
-| `index.html` | Full-screen presenter: slides peel away from the bottom-right corner as frosted glass. Open it in a browser. |
+| `index.html` | Full-screen presenter: slides peel away from the bottom-right corner along a transparent fold. Open it in a browser. |
 | `deck/deck.json` | Deck index: title, slide order, sections and fonts |
 | `deck/slides/*.html` | One file per slide (1920 × 1080). Speaker notes are in each slide’s `<aside>`. |
 | `build.py` | Rebuilds `index.html` from the slide files: `python3 build.py` |
@@ -17,7 +17,7 @@ A 36-slide deck presenting the research paper *Designing for intent, not pages: 
 |---|---|
 | Next slide | → ↓ Space Enter Page Down, click the right of the screen, or swipe left |
 | Previous slide | ← ↑ Page Up Backspace, click the left third, or swipe right |
-| First / last slide | Home / End |
+| First / last slide | Home button or Home key / End key |
 | Full screen | F, or the Full screen button |
 | Jump to a slide | Add `#12` to the URL |
 
